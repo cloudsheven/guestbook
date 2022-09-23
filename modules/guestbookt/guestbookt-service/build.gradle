@@ -1,0 +1,15 @@
+dependencies {
+	compileOnly group: "com.liferay.portal", name: "release.portal.api"
+	
+	compileOnly group: "com.liferay", name: "com.liferay.petra.function"
+	compileOnly group: "com.liferay", name: "com.liferay.petra.reflect"
+	compileOnly group: "com.liferay", name: "com.liferay.petra.model.adapter", version: '5.0.4'
+	
+	compile project(":modules:guestbookt:guestbookt-api")
+}
+
+buildService {
+	apiDir = "../guestbookt-api/src/main/java"
+}
+
+group = "com.tutorial.guestbookt"

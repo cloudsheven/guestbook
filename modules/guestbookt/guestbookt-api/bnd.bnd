@@ -1,0 +1,10 @@
+Bundle-Name: guestbookt-api
+Bundle-SymbolicName: com.tutorial.guestbookt.api
+Bundle-Version: 1.0.0
+Export-Package:\
+	com.tutorial.guestbookt.exception,\
+	com.tutorial.guestbookt.model,\
+	com.tutorial.guestbookt.service,\
+	com.tutorial.guestbookt.service.persistence
+-check: EXPORTS
+-includeresource: META-INF/service.xml=../guestbookt-service/service.xml
