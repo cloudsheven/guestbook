@@ -1,13 +1,7 @@
-<%@page import="java.util.Currency"%>
-
-<%@page import="com.liferay.portal.kernel.dao.search.SearchContainer"%>
-<%@ page import="com.liferay.portal.kernel.security.permission.ActionKeys" %>
+<%@page import="com.liferay.asset.kernel.model.AssetRendererFactory"%>
+<%@page import="com.liferay.asset.kernel.model.AssetRenderer"%>
+<%@page import="com.liferay.portal.kernel.dao.orm.QueryUtil"%>
 <%@page import="com.liferay.portal.kernel.theme.ThemeDisplay"%>
-<%@ page import="com.liferay.portal.kernel.util.WebKeys" %>
-
-<%@ page import="com.tutorial.guestbookt.web.internal.security.permission.resource.GuestbookTModelPermission" %>
-<%@ page import="com.tutorial.guestbookt.web.internal.security.permission.resource.GuestbookTPermission" %>
-<%@ page import="com.tutorial.guestbookt.web.internal.security.permission.resource.GuestbookTEntryPermission" %>
 
 <%@include file="../init.jsp"%>
 
@@ -16,15 +10,32 @@
 
 <%
 long guestbookTId = Long.valueOf((Long) renderRequest.getAttribute("guestbookTId"));
-long companyId = themeDisplay.getCompanyId();
-long groupId = themeDisplay.getScopeGroupId();
-GuestbookT guestbookT = GuestbookTLocalServiceUtil.getGuestbookT(guestbookTId);
-String guestbookUUID = guestbookT.getUuid();
 %>
+
+<portlet:renderURL var="searchURL">
+    <portlet:param name="mvcPath" 
+    value="/guestbookt/view_search.jsp" />
+</portlet:renderURL>
+
+<aui:form action="<%=searchURL.toString() %>" name="fm">
+
+    <div class="row">
+        <div class="col-md-8">
+            <aui:input inlineLabel="left" label="" name="keywords" placeholder="search-entries" size="256" />
+        </div>
+
+        <div class="col-md-4">
+            <aui:button type="submit" value="search" />
+        </div>
+    </div>
+
+ </aui:form>
+
 <aui:nav cssClass="nav-tabs">
 
     <%
-        List<GuestbookT> guestbooks = GuestbookTLocalServiceUtil.getGuestbooks(scopeGroupId);
+        List<GuestbookT> guestbooks = GuestbookTLocalServiceUtil.getGuestbooks(
+        		scopeGroupId, WorkflowConstants.STATUS_APPROVED);
 
             for (int i = 0; i < guestbooks.size(); i++) {
 
@@ -70,8 +81,11 @@ String guestbookUUID = guestbookT.getUuid();
 	</c:if>
 </aui:button-row>
 
-<liferay-ui:search-container total="<%=GuestbookTEntryLocalServiceUtil.getGuestbookTEntriesCount()%>">
-	<liferay-ui:search-container-results results="<%=GuestbookTEntryLocalServiceUtil.getGuestbookTEntries(groupId, guestbookTId)%>"
+<liferay-ui:search-container total="<%=GuestbookTEntryLocalServiceUtil.getGuestbookEntriesCount(
+		scopeGroupId.longValue(), guestbookTId, WorkflowConstants.STATUS_APPROVED)%>">
+	<liferay-ui:search-container-results results="<%=GuestbookTEntryLocalServiceUtil.getGuestbookTEntries(
+			scopeGroupId.longValue(), guestbookTId, WorkflowConstants.STATUS_APPROVED, 
+            searchContainer.getStart(), searchContainer.getEnd())%>"
     	 />
 	<liferay-ui:search-container-row
     	className="com.tutorial.guestbookt.model.GuestbookTEntry" modelVar="entry">

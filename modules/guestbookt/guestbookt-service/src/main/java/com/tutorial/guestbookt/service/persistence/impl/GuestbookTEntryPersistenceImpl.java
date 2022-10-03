@@ -2407,6 +2407,1498 @@ public class GuestbookTEntryPersistenceImpl
 	private static final String _FINDER_COLUMN_G_G_GUESTBOOKTID_2 =
 		"guestbookTEntry.guestbookTId = ?";
 
+	private FinderPath _finderPathWithPaginationFindByStatus;
+	private FinderPath _finderPathWithoutPaginationFindByStatus;
+	private FinderPath _finderPathCountByStatus;
+
+	/**
+	 * Returns all the guestbook t entries where status = &#63;.
+	 *
+	 * @param status the status
+	 * @return the matching guestbook t entries
+	 */
+	@Override
+	public List<GuestbookTEntry> findByStatus(int status) {
+		return findByStatus(status, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
+	}
+
+	/**
+	 * Returns a range of all the guestbook t entries where status = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>GuestbookTEntryModelImpl</code>.
+	 * </p>
+	 *
+	 * @param status the status
+	 * @param start the lower bound of the range of guestbook t entries
+	 * @param end the upper bound of the range of guestbook t entries (not inclusive)
+	 * @return the range of matching guestbook t entries
+	 */
+	@Override
+	public List<GuestbookTEntry> findByStatus(int status, int start, int end) {
+		return findByStatus(status, start, end, null);
+	}
+
+	/**
+	 * Returns an ordered range of all the guestbook t entries where status = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>GuestbookTEntryModelImpl</code>.
+	 * </p>
+	 *
+	 * @param status the status
+	 * @param start the lower bound of the range of guestbook t entries
+	 * @param end the upper bound of the range of guestbook t entries (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching guestbook t entries
+	 */
+	@Override
+	public List<GuestbookTEntry> findByStatus(
+		int status, int start, int end,
+		OrderByComparator<GuestbookTEntry> orderByComparator) {
+
+		return findByStatus(status, start, end, orderByComparator, true);
+	}
+
+	/**
+	 * Returns an ordered range of all the guestbook t entries where status = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>GuestbookTEntryModelImpl</code>.
+	 * </p>
+	 *
+	 * @param status the status
+	 * @param start the lower bound of the range of guestbook t entries
+	 * @param end the upper bound of the range of guestbook t entries (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
+	 * @return the ordered range of matching guestbook t entries
+	 */
+	@Override
+	public List<GuestbookTEntry> findByStatus(
+		int status, int start, int end,
+		OrderByComparator<GuestbookTEntry> orderByComparator,
+		boolean useFinderCache) {
+
+		FinderPath finderPath = null;
+		Object[] finderArgs = null;
+
+		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
+			(orderByComparator == null)) {
+
+			if (useFinderCache) {
+				finderPath = _finderPathWithoutPaginationFindByStatus;
+				finderArgs = new Object[] {status};
+			}
+		}
+		else if (useFinderCache) {
+			finderPath = _finderPathWithPaginationFindByStatus;
+			finderArgs = new Object[] {status, start, end, orderByComparator};
+		}
+
+		List<GuestbookTEntry> list = null;
+
+		if (useFinderCache) {
+			list = (List<GuestbookTEntry>)finderCache.getResult(
+				finderPath, finderArgs);
+
+			if ((list != null) && !list.isEmpty()) {
+				for (GuestbookTEntry guestbookTEntry : list) {
+					if (status != guestbookTEntry.getStatus()) {
+						list = null;
+
+						break;
+					}
+				}
+			}
+		}
+
+		if (list == null) {
+			StringBundler sb = null;
+
+			if (orderByComparator != null) {
+				sb = new StringBundler(
+					3 + (orderByComparator.getOrderByFields().length * 2));
+			}
+			else {
+				sb = new StringBundler(3);
+			}
+
+			sb.append(_SQL_SELECT_GUESTBOOKTENTRY_WHERE);
+
+			sb.append(_FINDER_COLUMN_STATUS_STATUS_2);
+
+			if (orderByComparator != null) {
+				appendOrderByComparator(
+					sb, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
+			}
+			else {
+				sb.append(GuestbookTEntryModelImpl.ORDER_BY_JPQL);
+			}
+
+			String sql = sb.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query query = session.createQuery(sql);
+
+				QueryPos queryPos = QueryPos.getInstance(query);
+
+				queryPos.add(status);
+
+				list = (List<GuestbookTEntry>)QueryUtil.list(
+					query, getDialect(), start, end);
+
+				cacheResult(list);
+
+				if (useFinderCache) {
+					finderCache.putResult(finderPath, finderArgs, list);
+				}
+			}
+			catch (Exception exception) {
+				throw processException(exception);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		return list;
+	}
+
+	/**
+	 * Returns the first guestbook t entry in the ordered set where status = &#63;.
+	 *
+	 * @param status the status
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching guestbook t entry
+	 * @throws NoSuchGuestbookTEntryException if a matching guestbook t entry could not be found
+	 */
+	@Override
+	public GuestbookTEntry findByStatus_First(
+			int status, OrderByComparator<GuestbookTEntry> orderByComparator)
+		throws NoSuchGuestbookTEntryException {
+
+		GuestbookTEntry guestbookTEntry = fetchByStatus_First(
+			status, orderByComparator);
+
+		if (guestbookTEntry != null) {
+			return guestbookTEntry;
+		}
+
+		StringBundler sb = new StringBundler(4);
+
+		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		sb.append("status=");
+		sb.append(status);
+
+		sb.append("}");
+
+		throw new NoSuchGuestbookTEntryException(sb.toString());
+	}
+
+	/**
+	 * Returns the first guestbook t entry in the ordered set where status = &#63;.
+	 *
+	 * @param status the status
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching guestbook t entry, or <code>null</code> if a matching guestbook t entry could not be found
+	 */
+	@Override
+	public GuestbookTEntry fetchByStatus_First(
+		int status, OrderByComparator<GuestbookTEntry> orderByComparator) {
+
+		List<GuestbookTEntry> list = findByStatus(
+			status, 0, 1, orderByComparator);
+
+		if (!list.isEmpty()) {
+			return list.get(0);
+		}
+
+		return null;
+	}
+
+	/**
+	 * Returns the last guestbook t entry in the ordered set where status = &#63;.
+	 *
+	 * @param status the status
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching guestbook t entry
+	 * @throws NoSuchGuestbookTEntryException if a matching guestbook t entry could not be found
+	 */
+	@Override
+	public GuestbookTEntry findByStatus_Last(
+			int status, OrderByComparator<GuestbookTEntry> orderByComparator)
+		throws NoSuchGuestbookTEntryException {
+
+		GuestbookTEntry guestbookTEntry = fetchByStatus_Last(
+			status, orderByComparator);
+
+		if (guestbookTEntry != null) {
+			return guestbookTEntry;
+		}
+
+		StringBundler sb = new StringBundler(4);
+
+		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		sb.append("status=");
+		sb.append(status);
+
+		sb.append("}");
+
+		throw new NoSuchGuestbookTEntryException(sb.toString());
+	}
+
+	/**
+	 * Returns the last guestbook t entry in the ordered set where status = &#63;.
+	 *
+	 * @param status the status
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching guestbook t entry, or <code>null</code> if a matching guestbook t entry could not be found
+	 */
+	@Override
+	public GuestbookTEntry fetchByStatus_Last(
+		int status, OrderByComparator<GuestbookTEntry> orderByComparator) {
+
+		int count = countByStatus(status);
+
+		if (count == 0) {
+			return null;
+		}
+
+		List<GuestbookTEntry> list = findByStatus(
+			status, count - 1, count, orderByComparator);
+
+		if (!list.isEmpty()) {
+			return list.get(0);
+		}
+
+		return null;
+	}
+
+	/**
+	 * Returns the guestbook t entries before and after the current guestbook t entry in the ordered set where status = &#63;.
+	 *
+	 * @param entryId the primary key of the current guestbook t entry
+	 * @param status the status
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the previous, current, and next guestbook t entry
+	 * @throws NoSuchGuestbookTEntryException if a guestbook t entry with the primary key could not be found
+	 */
+	@Override
+	public GuestbookTEntry[] findByStatus_PrevAndNext(
+			long entryId, int status,
+			OrderByComparator<GuestbookTEntry> orderByComparator)
+		throws NoSuchGuestbookTEntryException {
+
+		GuestbookTEntry guestbookTEntry = findByPrimaryKey(entryId);
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			GuestbookTEntry[] array = new GuestbookTEntryImpl[3];
+
+			array[0] = getByStatus_PrevAndNext(
+				session, guestbookTEntry, status, orderByComparator, true);
+
+			array[1] = guestbookTEntry;
+
+			array[2] = getByStatus_PrevAndNext(
+				session, guestbookTEntry, status, orderByComparator, false);
+
+			return array;
+		}
+		catch (Exception exception) {
+			throw processException(exception);
+		}
+		finally {
+			closeSession(session);
+		}
+	}
+
+	protected GuestbookTEntry getByStatus_PrevAndNext(
+		Session session, GuestbookTEntry guestbookTEntry, int status,
+		OrderByComparator<GuestbookTEntry> orderByComparator,
+		boolean previous) {
+
+		StringBundler sb = null;
+
+		if (orderByComparator != null) {
+			sb = new StringBundler(
+				4 + (orderByComparator.getOrderByConditionFields().length * 3) +
+					(orderByComparator.getOrderByFields().length * 3));
+		}
+		else {
+			sb = new StringBundler(3);
+		}
+
+		sb.append(_SQL_SELECT_GUESTBOOKTENTRY_WHERE);
+
+		sb.append(_FINDER_COLUMN_STATUS_STATUS_2);
+
+		if (orderByComparator != null) {
+			String[] orderByConditionFields =
+				orderByComparator.getOrderByConditionFields();
+
+			if (orderByConditionFields.length > 0) {
+				sb.append(WHERE_AND);
+			}
+
+			for (int i = 0; i < orderByConditionFields.length; i++) {
+				sb.append(_ORDER_BY_ENTITY_ALIAS);
+				sb.append(orderByConditionFields[i]);
+
+				if ((i + 1) < orderByConditionFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						sb.append(WHERE_GREATER_THAN_HAS_NEXT);
+					}
+					else {
+						sb.append(WHERE_LESSER_THAN_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						sb.append(WHERE_GREATER_THAN);
+					}
+					else {
+						sb.append(WHERE_LESSER_THAN);
+					}
+				}
+			}
+
+			sb.append(ORDER_BY_CLAUSE);
+
+			String[] orderByFields = orderByComparator.getOrderByFields();
+
+			for (int i = 0; i < orderByFields.length; i++) {
+				sb.append(_ORDER_BY_ENTITY_ALIAS);
+				sb.append(orderByFields[i]);
+
+				if ((i + 1) < orderByFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						sb.append(ORDER_BY_ASC_HAS_NEXT);
+					}
+					else {
+						sb.append(ORDER_BY_DESC_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						sb.append(ORDER_BY_ASC);
+					}
+					else {
+						sb.append(ORDER_BY_DESC);
+					}
+				}
+			}
+		}
+		else {
+			sb.append(GuestbookTEntryModelImpl.ORDER_BY_JPQL);
+		}
+
+		String sql = sb.toString();
+
+		Query query = session.createQuery(sql);
+
+		query.setFirstResult(0);
+		query.setMaxResults(2);
+
+		QueryPos queryPos = QueryPos.getInstance(query);
+
+		queryPos.add(status);
+
+		if (orderByComparator != null) {
+			for (Object orderByConditionValue :
+					orderByComparator.getOrderByConditionValues(
+						guestbookTEntry)) {
+
+				queryPos.add(orderByConditionValue);
+			}
+		}
+
+		List<GuestbookTEntry> list = query.list();
+
+		if (list.size() == 2) {
+			return list.get(1);
+		}
+		else {
+			return null;
+		}
+	}
+
+	/**
+	 * Removes all the guestbook t entries where status = &#63; from the database.
+	 *
+	 * @param status the status
+	 */
+	@Override
+	public void removeByStatus(int status) {
+		for (GuestbookTEntry guestbookTEntry :
+				findByStatus(
+					status, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
+
+			remove(guestbookTEntry);
+		}
+	}
+
+	/**
+	 * Returns the number of guestbook t entries where status = &#63;.
+	 *
+	 * @param status the status
+	 * @return the number of matching guestbook t entries
+	 */
+	@Override
+	public int countByStatus(int status) {
+		FinderPath finderPath = _finderPathCountByStatus;
+
+		Object[] finderArgs = new Object[] {status};
+
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs);
+
+		if (count == null) {
+			StringBundler sb = new StringBundler(2);
+
+			sb.append(_SQL_COUNT_GUESTBOOKTENTRY_WHERE);
+
+			sb.append(_FINDER_COLUMN_STATUS_STATUS_2);
+
+			String sql = sb.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query query = session.createQuery(sql);
+
+				QueryPos queryPos = QueryPos.getInstance(query);
+
+				queryPos.add(status);
+
+				count = (Long)query.uniqueResult();
+
+				finderCache.putResult(finderPath, finderArgs, count);
+			}
+			catch (Exception exception) {
+				throw processException(exception);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		return count.intValue();
+	}
+
+	private static final String _FINDER_COLUMN_STATUS_STATUS_2 =
+		"guestbookTEntry.status = ?";
+
+	private FinderPath _finderPathWithPaginationFindByG_G_S;
+	private FinderPath _finderPathWithoutPaginationFindByG_G_S;
+	private FinderPath _finderPathCountByG_G_S;
+
+	/**
+	 * Returns all the guestbook t entries where groupId = &#63; and guestbookTId = &#63; and status = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param guestbookTId the guestbook t ID
+	 * @param status the status
+	 * @return the matching guestbook t entries
+	 */
+	@Override
+	public List<GuestbookTEntry> findByG_G_S(
+		long groupId, long guestbookTId, int status) {
+
+		return findByG_G_S(
+			groupId, guestbookTId, status, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
+			null);
+	}
+
+	/**
+	 * Returns a range of all the guestbook t entries where groupId = &#63; and guestbookTId = &#63; and status = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>GuestbookTEntryModelImpl</code>.
+	 * </p>
+	 *
+	 * @param groupId the group ID
+	 * @param guestbookTId the guestbook t ID
+	 * @param status the status
+	 * @param start the lower bound of the range of guestbook t entries
+	 * @param end the upper bound of the range of guestbook t entries (not inclusive)
+	 * @return the range of matching guestbook t entries
+	 */
+	@Override
+	public List<GuestbookTEntry> findByG_G_S(
+		long groupId, long guestbookTId, int status, int start, int end) {
+
+		return findByG_G_S(groupId, guestbookTId, status, start, end, null);
+	}
+
+	/**
+	 * Returns an ordered range of all the guestbook t entries where groupId = &#63; and guestbookTId = &#63; and status = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>GuestbookTEntryModelImpl</code>.
+	 * </p>
+	 *
+	 * @param groupId the group ID
+	 * @param guestbookTId the guestbook t ID
+	 * @param status the status
+	 * @param start the lower bound of the range of guestbook t entries
+	 * @param end the upper bound of the range of guestbook t entries (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching guestbook t entries
+	 */
+	@Override
+	public List<GuestbookTEntry> findByG_G_S(
+		long groupId, long guestbookTId, int status, int start, int end,
+		OrderByComparator<GuestbookTEntry> orderByComparator) {
+
+		return findByG_G_S(
+			groupId, guestbookTId, status, start, end, orderByComparator, true);
+	}
+
+	/**
+	 * Returns an ordered range of all the guestbook t entries where groupId = &#63; and guestbookTId = &#63; and status = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>GuestbookTEntryModelImpl</code>.
+	 * </p>
+	 *
+	 * @param groupId the group ID
+	 * @param guestbookTId the guestbook t ID
+	 * @param status the status
+	 * @param start the lower bound of the range of guestbook t entries
+	 * @param end the upper bound of the range of guestbook t entries (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
+	 * @return the ordered range of matching guestbook t entries
+	 */
+	@Override
+	public List<GuestbookTEntry> findByG_G_S(
+		long groupId, long guestbookTId, int status, int start, int end,
+		OrderByComparator<GuestbookTEntry> orderByComparator,
+		boolean useFinderCache) {
+
+		FinderPath finderPath = null;
+		Object[] finderArgs = null;
+
+		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
+			(orderByComparator == null)) {
+
+			if (useFinderCache) {
+				finderPath = _finderPathWithoutPaginationFindByG_G_S;
+				finderArgs = new Object[] {groupId, guestbookTId, status};
+			}
+		}
+		else if (useFinderCache) {
+			finderPath = _finderPathWithPaginationFindByG_G_S;
+			finderArgs = new Object[] {
+				groupId, guestbookTId, status, start, end, orderByComparator
+			};
+		}
+
+		List<GuestbookTEntry> list = null;
+
+		if (useFinderCache) {
+			list = (List<GuestbookTEntry>)finderCache.getResult(
+				finderPath, finderArgs);
+
+			if ((list != null) && !list.isEmpty()) {
+				for (GuestbookTEntry guestbookTEntry : list) {
+					if ((groupId != guestbookTEntry.getGroupId()) ||
+						(guestbookTId != guestbookTEntry.getGuestbookTId()) ||
+						(status != guestbookTEntry.getStatus())) {
+
+						list = null;
+
+						break;
+					}
+				}
+			}
+		}
+
+		if (list == null) {
+			StringBundler sb = null;
+
+			if (orderByComparator != null) {
+				sb = new StringBundler(
+					5 + (orderByComparator.getOrderByFields().length * 2));
+			}
+			else {
+				sb = new StringBundler(5);
+			}
+
+			sb.append(_SQL_SELECT_GUESTBOOKTENTRY_WHERE);
+
+			sb.append(_FINDER_COLUMN_G_G_S_GROUPID_2);
+
+			sb.append(_FINDER_COLUMN_G_G_S_GUESTBOOKTID_2);
+
+			sb.append(_FINDER_COLUMN_G_G_S_STATUS_2);
+
+			if (orderByComparator != null) {
+				appendOrderByComparator(
+					sb, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
+			}
+			else {
+				sb.append(GuestbookTEntryModelImpl.ORDER_BY_JPQL);
+			}
+
+			String sql = sb.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query query = session.createQuery(sql);
+
+				QueryPos queryPos = QueryPos.getInstance(query);
+
+				queryPos.add(groupId);
+
+				queryPos.add(guestbookTId);
+
+				queryPos.add(status);
+
+				list = (List<GuestbookTEntry>)QueryUtil.list(
+					query, getDialect(), start, end);
+
+				cacheResult(list);
+
+				if (useFinderCache) {
+					finderCache.putResult(finderPath, finderArgs, list);
+				}
+			}
+			catch (Exception exception) {
+				throw processException(exception);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		return list;
+	}
+
+	/**
+	 * Returns the first guestbook t entry in the ordered set where groupId = &#63; and guestbookTId = &#63; and status = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param guestbookTId the guestbook t ID
+	 * @param status the status
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching guestbook t entry
+	 * @throws NoSuchGuestbookTEntryException if a matching guestbook t entry could not be found
+	 */
+	@Override
+	public GuestbookTEntry findByG_G_S_First(
+			long groupId, long guestbookTId, int status,
+			OrderByComparator<GuestbookTEntry> orderByComparator)
+		throws NoSuchGuestbookTEntryException {
+
+		GuestbookTEntry guestbookTEntry = fetchByG_G_S_First(
+			groupId, guestbookTId, status, orderByComparator);
+
+		if (guestbookTEntry != null) {
+			return guestbookTEntry;
+		}
+
+		StringBundler sb = new StringBundler(8);
+
+		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		sb.append("groupId=");
+		sb.append(groupId);
+
+		sb.append(", guestbookTId=");
+		sb.append(guestbookTId);
+
+		sb.append(", status=");
+		sb.append(status);
+
+		sb.append("}");
+
+		throw new NoSuchGuestbookTEntryException(sb.toString());
+	}
+
+	/**
+	 * Returns the first guestbook t entry in the ordered set where groupId = &#63; and guestbookTId = &#63; and status = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param guestbookTId the guestbook t ID
+	 * @param status the status
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching guestbook t entry, or <code>null</code> if a matching guestbook t entry could not be found
+	 */
+	@Override
+	public GuestbookTEntry fetchByG_G_S_First(
+		long groupId, long guestbookTId, int status,
+		OrderByComparator<GuestbookTEntry> orderByComparator) {
+
+		List<GuestbookTEntry> list = findByG_G_S(
+			groupId, guestbookTId, status, 0, 1, orderByComparator);
+
+		if (!list.isEmpty()) {
+			return list.get(0);
+		}
+
+		return null;
+	}
+
+	/**
+	 * Returns the last guestbook t entry in the ordered set where groupId = &#63; and guestbookTId = &#63; and status = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param guestbookTId the guestbook t ID
+	 * @param status the status
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching guestbook t entry
+	 * @throws NoSuchGuestbookTEntryException if a matching guestbook t entry could not be found
+	 */
+	@Override
+	public GuestbookTEntry findByG_G_S_Last(
+			long groupId, long guestbookTId, int status,
+			OrderByComparator<GuestbookTEntry> orderByComparator)
+		throws NoSuchGuestbookTEntryException {
+
+		GuestbookTEntry guestbookTEntry = fetchByG_G_S_Last(
+			groupId, guestbookTId, status, orderByComparator);
+
+		if (guestbookTEntry != null) {
+			return guestbookTEntry;
+		}
+
+		StringBundler sb = new StringBundler(8);
+
+		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		sb.append("groupId=");
+		sb.append(groupId);
+
+		sb.append(", guestbookTId=");
+		sb.append(guestbookTId);
+
+		sb.append(", status=");
+		sb.append(status);
+
+		sb.append("}");
+
+		throw new NoSuchGuestbookTEntryException(sb.toString());
+	}
+
+	/**
+	 * Returns the last guestbook t entry in the ordered set where groupId = &#63; and guestbookTId = &#63; and status = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param guestbookTId the guestbook t ID
+	 * @param status the status
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching guestbook t entry, or <code>null</code> if a matching guestbook t entry could not be found
+	 */
+	@Override
+	public GuestbookTEntry fetchByG_G_S_Last(
+		long groupId, long guestbookTId, int status,
+		OrderByComparator<GuestbookTEntry> orderByComparator) {
+
+		int count = countByG_G_S(groupId, guestbookTId, status);
+
+		if (count == 0) {
+			return null;
+		}
+
+		List<GuestbookTEntry> list = findByG_G_S(
+			groupId, guestbookTId, status, count - 1, count, orderByComparator);
+
+		if (!list.isEmpty()) {
+			return list.get(0);
+		}
+
+		return null;
+	}
+
+	/**
+	 * Returns the guestbook t entries before and after the current guestbook t entry in the ordered set where groupId = &#63; and guestbookTId = &#63; and status = &#63;.
+	 *
+	 * @param entryId the primary key of the current guestbook t entry
+	 * @param groupId the group ID
+	 * @param guestbookTId the guestbook t ID
+	 * @param status the status
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the previous, current, and next guestbook t entry
+	 * @throws NoSuchGuestbookTEntryException if a guestbook t entry with the primary key could not be found
+	 */
+	@Override
+	public GuestbookTEntry[] findByG_G_S_PrevAndNext(
+			long entryId, long groupId, long guestbookTId, int status,
+			OrderByComparator<GuestbookTEntry> orderByComparator)
+		throws NoSuchGuestbookTEntryException {
+
+		GuestbookTEntry guestbookTEntry = findByPrimaryKey(entryId);
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			GuestbookTEntry[] array = new GuestbookTEntryImpl[3];
+
+			array[0] = getByG_G_S_PrevAndNext(
+				session, guestbookTEntry, groupId, guestbookTId, status,
+				orderByComparator, true);
+
+			array[1] = guestbookTEntry;
+
+			array[2] = getByG_G_S_PrevAndNext(
+				session, guestbookTEntry, groupId, guestbookTId, status,
+				orderByComparator, false);
+
+			return array;
+		}
+		catch (Exception exception) {
+			throw processException(exception);
+		}
+		finally {
+			closeSession(session);
+		}
+	}
+
+	protected GuestbookTEntry getByG_G_S_PrevAndNext(
+		Session session, GuestbookTEntry guestbookTEntry, long groupId,
+		long guestbookTId, int status,
+		OrderByComparator<GuestbookTEntry> orderByComparator,
+		boolean previous) {
+
+		StringBundler sb = null;
+
+		if (orderByComparator != null) {
+			sb = new StringBundler(
+				6 + (orderByComparator.getOrderByConditionFields().length * 3) +
+					(orderByComparator.getOrderByFields().length * 3));
+		}
+		else {
+			sb = new StringBundler(5);
+		}
+
+		sb.append(_SQL_SELECT_GUESTBOOKTENTRY_WHERE);
+
+		sb.append(_FINDER_COLUMN_G_G_S_GROUPID_2);
+
+		sb.append(_FINDER_COLUMN_G_G_S_GUESTBOOKTID_2);
+
+		sb.append(_FINDER_COLUMN_G_G_S_STATUS_2);
+
+		if (orderByComparator != null) {
+			String[] orderByConditionFields =
+				orderByComparator.getOrderByConditionFields();
+
+			if (orderByConditionFields.length > 0) {
+				sb.append(WHERE_AND);
+			}
+
+			for (int i = 0; i < orderByConditionFields.length; i++) {
+				sb.append(_ORDER_BY_ENTITY_ALIAS);
+				sb.append(orderByConditionFields[i]);
+
+				if ((i + 1) < orderByConditionFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						sb.append(WHERE_GREATER_THAN_HAS_NEXT);
+					}
+					else {
+						sb.append(WHERE_LESSER_THAN_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						sb.append(WHERE_GREATER_THAN);
+					}
+					else {
+						sb.append(WHERE_LESSER_THAN);
+					}
+				}
+			}
+
+			sb.append(ORDER_BY_CLAUSE);
+
+			String[] orderByFields = orderByComparator.getOrderByFields();
+
+			for (int i = 0; i < orderByFields.length; i++) {
+				sb.append(_ORDER_BY_ENTITY_ALIAS);
+				sb.append(orderByFields[i]);
+
+				if ((i + 1) < orderByFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						sb.append(ORDER_BY_ASC_HAS_NEXT);
+					}
+					else {
+						sb.append(ORDER_BY_DESC_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						sb.append(ORDER_BY_ASC);
+					}
+					else {
+						sb.append(ORDER_BY_DESC);
+					}
+				}
+			}
+		}
+		else {
+			sb.append(GuestbookTEntryModelImpl.ORDER_BY_JPQL);
+		}
+
+		String sql = sb.toString();
+
+		Query query = session.createQuery(sql);
+
+		query.setFirstResult(0);
+		query.setMaxResults(2);
+
+		QueryPos queryPos = QueryPos.getInstance(query);
+
+		queryPos.add(groupId);
+
+		queryPos.add(guestbookTId);
+
+		queryPos.add(status);
+
+		if (orderByComparator != null) {
+			for (Object orderByConditionValue :
+					orderByComparator.getOrderByConditionValues(
+						guestbookTEntry)) {
+
+				queryPos.add(orderByConditionValue);
+			}
+		}
+
+		List<GuestbookTEntry> list = query.list();
+
+		if (list.size() == 2) {
+			return list.get(1);
+		}
+		else {
+			return null;
+		}
+	}
+
+	/**
+	 * Returns all the guestbook t entries that the user has permission to view where groupId = &#63; and guestbookTId = &#63; and status = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param guestbookTId the guestbook t ID
+	 * @param status the status
+	 * @return the matching guestbook t entries that the user has permission to view
+	 */
+	@Override
+	public List<GuestbookTEntry> filterFindByG_G_S(
+		long groupId, long guestbookTId, int status) {
+
+		return filterFindByG_G_S(
+			groupId, guestbookTId, status, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
+			null);
+	}
+
+	/**
+	 * Returns a range of all the guestbook t entries that the user has permission to view where groupId = &#63; and guestbookTId = &#63; and status = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>GuestbookTEntryModelImpl</code>.
+	 * </p>
+	 *
+	 * @param groupId the group ID
+	 * @param guestbookTId the guestbook t ID
+	 * @param status the status
+	 * @param start the lower bound of the range of guestbook t entries
+	 * @param end the upper bound of the range of guestbook t entries (not inclusive)
+	 * @return the range of matching guestbook t entries that the user has permission to view
+	 */
+	@Override
+	public List<GuestbookTEntry> filterFindByG_G_S(
+		long groupId, long guestbookTId, int status, int start, int end) {
+
+		return filterFindByG_G_S(
+			groupId, guestbookTId, status, start, end, null);
+	}
+
+	/**
+	 * Returns an ordered range of all the guestbook t entries that the user has permissions to view where groupId = &#63; and guestbookTId = &#63; and status = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>GuestbookTEntryModelImpl</code>.
+	 * </p>
+	 *
+	 * @param groupId the group ID
+	 * @param guestbookTId the guestbook t ID
+	 * @param status the status
+	 * @param start the lower bound of the range of guestbook t entries
+	 * @param end the upper bound of the range of guestbook t entries (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching guestbook t entries that the user has permission to view
+	 */
+	@Override
+	public List<GuestbookTEntry> filterFindByG_G_S(
+		long groupId, long guestbookTId, int status, int start, int end,
+		OrderByComparator<GuestbookTEntry> orderByComparator) {
+
+		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
+			return findByG_G_S(
+				groupId, guestbookTId, status, start, end, orderByComparator);
+		}
+
+		StringBundler sb = null;
+
+		if (orderByComparator != null) {
+			sb = new StringBundler(
+				5 + (orderByComparator.getOrderByFields().length * 2));
+		}
+		else {
+			sb = new StringBundler(6);
+		}
+
+		if (getDB().isSupportsInlineDistinct()) {
+			sb.append(_FILTER_SQL_SELECT_GUESTBOOKTENTRY_WHERE);
+		}
+		else {
+			sb.append(
+				_FILTER_SQL_SELECT_GUESTBOOKTENTRY_NO_INLINE_DISTINCT_WHERE_1);
+		}
+
+		sb.append(_FINDER_COLUMN_G_G_S_GROUPID_2);
+
+		sb.append(_FINDER_COLUMN_G_G_S_GUESTBOOKTID_2);
+
+		sb.append(_FINDER_COLUMN_G_G_S_STATUS_2);
+
+		if (!getDB().isSupportsInlineDistinct()) {
+			sb.append(
+				_FILTER_SQL_SELECT_GUESTBOOKTENTRY_NO_INLINE_DISTINCT_WHERE_2);
+		}
+
+		if (orderByComparator != null) {
+			if (getDB().isSupportsInlineDistinct()) {
+				appendOrderByComparator(
+					sb, _ORDER_BY_ENTITY_ALIAS, orderByComparator, true);
+			}
+			else {
+				appendOrderByComparator(
+					sb, _ORDER_BY_ENTITY_TABLE, orderByComparator, true);
+			}
+		}
+		else {
+			if (getDB().isSupportsInlineDistinct()) {
+				sb.append(GuestbookTEntryModelImpl.ORDER_BY_JPQL);
+			}
+			else {
+				sb.append(GuestbookTEntryModelImpl.ORDER_BY_SQL);
+			}
+		}
+
+		String sql = InlineSQLHelperUtil.replacePermissionCheck(
+			sb.toString(), GuestbookTEntry.class.getName(),
+			_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN, groupId);
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			SQLQuery sqlQuery = session.createSynchronizedSQLQuery(sql);
+
+			if (getDB().isSupportsInlineDistinct()) {
+				sqlQuery.addEntity(
+					_FILTER_ENTITY_ALIAS, GuestbookTEntryImpl.class);
+			}
+			else {
+				sqlQuery.addEntity(
+					_FILTER_ENTITY_TABLE, GuestbookTEntryImpl.class);
+			}
+
+			QueryPos queryPos = QueryPos.getInstance(sqlQuery);
+
+			queryPos.add(groupId);
+
+			queryPos.add(guestbookTId);
+
+			queryPos.add(status);
+
+			return (List<GuestbookTEntry>)QueryUtil.list(
+				sqlQuery, getDialect(), start, end);
+		}
+		catch (Exception exception) {
+			throw processException(exception);
+		}
+		finally {
+			closeSession(session);
+		}
+	}
+
+	/**
+	 * Returns the guestbook t entries before and after the current guestbook t entry in the ordered set of guestbook t entries that the user has permission to view where groupId = &#63; and guestbookTId = &#63; and status = &#63;.
+	 *
+	 * @param entryId the primary key of the current guestbook t entry
+	 * @param groupId the group ID
+	 * @param guestbookTId the guestbook t ID
+	 * @param status the status
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the previous, current, and next guestbook t entry
+	 * @throws NoSuchGuestbookTEntryException if a guestbook t entry with the primary key could not be found
+	 */
+	@Override
+	public GuestbookTEntry[] filterFindByG_G_S_PrevAndNext(
+			long entryId, long groupId, long guestbookTId, int status,
+			OrderByComparator<GuestbookTEntry> orderByComparator)
+		throws NoSuchGuestbookTEntryException {
+
+		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
+			return findByG_G_S_PrevAndNext(
+				entryId, groupId, guestbookTId, status, orderByComparator);
+		}
+
+		GuestbookTEntry guestbookTEntry = findByPrimaryKey(entryId);
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			GuestbookTEntry[] array = new GuestbookTEntryImpl[3];
+
+			array[0] = filterGetByG_G_S_PrevAndNext(
+				session, guestbookTEntry, groupId, guestbookTId, status,
+				orderByComparator, true);
+
+			array[1] = guestbookTEntry;
+
+			array[2] = filterGetByG_G_S_PrevAndNext(
+				session, guestbookTEntry, groupId, guestbookTId, status,
+				orderByComparator, false);
+
+			return array;
+		}
+		catch (Exception exception) {
+			throw processException(exception);
+		}
+		finally {
+			closeSession(session);
+		}
+	}
+
+	protected GuestbookTEntry filterGetByG_G_S_PrevAndNext(
+		Session session, GuestbookTEntry guestbookTEntry, long groupId,
+		long guestbookTId, int status,
+		OrderByComparator<GuestbookTEntry> orderByComparator,
+		boolean previous) {
+
+		StringBundler sb = null;
+
+		if (orderByComparator != null) {
+			sb = new StringBundler(
+				7 + (orderByComparator.getOrderByConditionFields().length * 3) +
+					(orderByComparator.getOrderByFields().length * 3));
+		}
+		else {
+			sb = new StringBundler(6);
+		}
+
+		if (getDB().isSupportsInlineDistinct()) {
+			sb.append(_FILTER_SQL_SELECT_GUESTBOOKTENTRY_WHERE);
+		}
+		else {
+			sb.append(
+				_FILTER_SQL_SELECT_GUESTBOOKTENTRY_NO_INLINE_DISTINCT_WHERE_1);
+		}
+
+		sb.append(_FINDER_COLUMN_G_G_S_GROUPID_2);
+
+		sb.append(_FINDER_COLUMN_G_G_S_GUESTBOOKTID_2);
+
+		sb.append(_FINDER_COLUMN_G_G_S_STATUS_2);
+
+		if (!getDB().isSupportsInlineDistinct()) {
+			sb.append(
+				_FILTER_SQL_SELECT_GUESTBOOKTENTRY_NO_INLINE_DISTINCT_WHERE_2);
+		}
+
+		if (orderByComparator != null) {
+			String[] orderByConditionFields =
+				orderByComparator.getOrderByConditionFields();
+
+			if (orderByConditionFields.length > 0) {
+				sb.append(WHERE_AND);
+			}
+
+			for (int i = 0; i < orderByConditionFields.length; i++) {
+				if (getDB().isSupportsInlineDistinct()) {
+					sb.append(
+						getColumnName(
+							_ORDER_BY_ENTITY_ALIAS, orderByConditionFields[i],
+							true));
+				}
+				else {
+					sb.append(
+						getColumnName(
+							_ORDER_BY_ENTITY_TABLE, orderByConditionFields[i],
+							true));
+				}
+
+				if ((i + 1) < orderByConditionFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						sb.append(WHERE_GREATER_THAN_HAS_NEXT);
+					}
+					else {
+						sb.append(WHERE_LESSER_THAN_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						sb.append(WHERE_GREATER_THAN);
+					}
+					else {
+						sb.append(WHERE_LESSER_THAN);
+					}
+				}
+			}
+
+			sb.append(ORDER_BY_CLAUSE);
+
+			String[] orderByFields = orderByComparator.getOrderByFields();
+
+			for (int i = 0; i < orderByFields.length; i++) {
+				if (getDB().isSupportsInlineDistinct()) {
+					sb.append(
+						getColumnName(
+							_ORDER_BY_ENTITY_ALIAS, orderByFields[i], true));
+				}
+				else {
+					sb.append(
+						getColumnName(
+							_ORDER_BY_ENTITY_TABLE, orderByFields[i], true));
+				}
+
+				if ((i + 1) < orderByFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						sb.append(ORDER_BY_ASC_HAS_NEXT);
+					}
+					else {
+						sb.append(ORDER_BY_DESC_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						sb.append(ORDER_BY_ASC);
+					}
+					else {
+						sb.append(ORDER_BY_DESC);
+					}
+				}
+			}
+		}
+		else {
+			if (getDB().isSupportsInlineDistinct()) {
+				sb.append(GuestbookTEntryModelImpl.ORDER_BY_JPQL);
+			}
+			else {
+				sb.append(GuestbookTEntryModelImpl.ORDER_BY_SQL);
+			}
+		}
+
+		String sql = InlineSQLHelperUtil.replacePermissionCheck(
+			sb.toString(), GuestbookTEntry.class.getName(),
+			_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN, groupId);
+
+		SQLQuery sqlQuery = session.createSynchronizedSQLQuery(sql);
+
+		sqlQuery.setFirstResult(0);
+		sqlQuery.setMaxResults(2);
+
+		if (getDB().isSupportsInlineDistinct()) {
+			sqlQuery.addEntity(_FILTER_ENTITY_ALIAS, GuestbookTEntryImpl.class);
+		}
+		else {
+			sqlQuery.addEntity(_FILTER_ENTITY_TABLE, GuestbookTEntryImpl.class);
+		}
+
+		QueryPos queryPos = QueryPos.getInstance(sqlQuery);
+
+		queryPos.add(groupId);
+
+		queryPos.add(guestbookTId);
+
+		queryPos.add(status);
+
+		if (orderByComparator != null) {
+			for (Object orderByConditionValue :
+					orderByComparator.getOrderByConditionValues(
+						guestbookTEntry)) {
+
+				queryPos.add(orderByConditionValue);
+			}
+		}
+
+		List<GuestbookTEntry> list = sqlQuery.list();
+
+		if (list.size() == 2) {
+			return list.get(1);
+		}
+		else {
+			return null;
+		}
+	}
+
+	/**
+	 * Removes all the guestbook t entries where groupId = &#63; and guestbookTId = &#63; and status = &#63; from the database.
+	 *
+	 * @param groupId the group ID
+	 * @param guestbookTId the guestbook t ID
+	 * @param status the status
+	 */
+	@Override
+	public void removeByG_G_S(long groupId, long guestbookTId, int status) {
+		for (GuestbookTEntry guestbookTEntry :
+				findByG_G_S(
+					groupId, guestbookTId, status, QueryUtil.ALL_POS,
+					QueryUtil.ALL_POS, null)) {
+
+			remove(guestbookTEntry);
+		}
+	}
+
+	/**
+	 * Returns the number of guestbook t entries where groupId = &#63; and guestbookTId = &#63; and status = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param guestbookTId the guestbook t ID
+	 * @param status the status
+	 * @return the number of matching guestbook t entries
+	 */
+	@Override
+	public int countByG_G_S(long groupId, long guestbookTId, int status) {
+		FinderPath finderPath = _finderPathCountByG_G_S;
+
+		Object[] finderArgs = new Object[] {groupId, guestbookTId, status};
+
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs);
+
+		if (count == null) {
+			StringBundler sb = new StringBundler(4);
+
+			sb.append(_SQL_COUNT_GUESTBOOKTENTRY_WHERE);
+
+			sb.append(_FINDER_COLUMN_G_G_S_GROUPID_2);
+
+			sb.append(_FINDER_COLUMN_G_G_S_GUESTBOOKTID_2);
+
+			sb.append(_FINDER_COLUMN_G_G_S_STATUS_2);
+
+			String sql = sb.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query query = session.createQuery(sql);
+
+				QueryPos queryPos = QueryPos.getInstance(query);
+
+				queryPos.add(groupId);
+
+				queryPos.add(guestbookTId);
+
+				queryPos.add(status);
+
+				count = (Long)query.uniqueResult();
+
+				finderCache.putResult(finderPath, finderArgs, count);
+			}
+			catch (Exception exception) {
+				throw processException(exception);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		return count.intValue();
+	}
+
+	/**
+	 * Returns the number of guestbook t entries that the user has permission to view where groupId = &#63; and guestbookTId = &#63; and status = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param guestbookTId the guestbook t ID
+	 * @param status the status
+	 * @return the number of matching guestbook t entries that the user has permission to view
+	 */
+	@Override
+	public int filterCountByG_G_S(long groupId, long guestbookTId, int status) {
+		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
+			return countByG_G_S(groupId, guestbookTId, status);
+		}
+
+		StringBundler sb = new StringBundler(4);
+
+		sb.append(_FILTER_SQL_COUNT_GUESTBOOKTENTRY_WHERE);
+
+		sb.append(_FINDER_COLUMN_G_G_S_GROUPID_2);
+
+		sb.append(_FINDER_COLUMN_G_G_S_GUESTBOOKTID_2);
+
+		sb.append(_FINDER_COLUMN_G_G_S_STATUS_2);
+
+		String sql = InlineSQLHelperUtil.replacePermissionCheck(
+			sb.toString(), GuestbookTEntry.class.getName(),
+			_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN, groupId);
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			SQLQuery sqlQuery = session.createSynchronizedSQLQuery(sql);
+
+			sqlQuery.addScalar(
+				COUNT_COLUMN_NAME, com.liferay.portal.kernel.dao.orm.Type.LONG);
+
+			QueryPos queryPos = QueryPos.getInstance(sqlQuery);
+
+			queryPos.add(groupId);
+
+			queryPos.add(guestbookTId);
+
+			queryPos.add(status);
+
+			Long count = (Long)sqlQuery.uniqueResult();
+
+			return count.intValue();
+		}
+		catch (Exception exception) {
+			throw processException(exception);
+		}
+		finally {
+			closeSession(session);
+		}
+	}
+
+	private static final String _FINDER_COLUMN_G_G_S_GROUPID_2 =
+		"guestbookTEntry.groupId = ? AND ";
+
+	private static final String _FINDER_COLUMN_G_G_S_GUESTBOOKTID_2 =
+		"guestbookTEntry.guestbookTId = ? AND ";
+
+	private static final String _FINDER_COLUMN_G_G_S_STATUS_2 =
+		"guestbookTEntry.status = ?";
+
 	public GuestbookTEntryPersistenceImpl() {
 		Map<String, String> dbColumnNames = new HashMap<String, String>();
 
@@ -3062,6 +4554,49 @@ public class GuestbookTEntryPersistenceImpl
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByG_G",
 			new String[] {Long.class.getName(), Long.class.getName()},
 			new String[] {"groupId", "guestbookTId"}, false);
+
+		_finderPathWithPaginationFindByStatus = new FinderPath(
+			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByStatus",
+			new String[] {
+				Integer.class.getName(), Integer.class.getName(),
+				Integer.class.getName(), OrderByComparator.class.getName()
+			},
+			new String[] {"status"}, true);
+
+		_finderPathWithoutPaginationFindByStatus = new FinderPath(
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByStatus",
+			new String[] {Integer.class.getName()}, new String[] {"status"},
+			true);
+
+		_finderPathCountByStatus = new FinderPath(
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByStatus",
+			new String[] {Integer.class.getName()}, new String[] {"status"},
+			false);
+
+		_finderPathWithPaginationFindByG_G_S = new FinderPath(
+			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_G_S",
+			new String[] {
+				Long.class.getName(), Long.class.getName(),
+				Integer.class.getName(), Integer.class.getName(),
+				Integer.class.getName(), OrderByComparator.class.getName()
+			},
+			new String[] {"groupId", "guestbookTId", "status"}, true);
+
+		_finderPathWithoutPaginationFindByG_G_S = new FinderPath(
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByG_G_S",
+			new String[] {
+				Long.class.getName(), Long.class.getName(),
+				Integer.class.getName()
+			},
+			new String[] {"groupId", "guestbookTId", "status"}, true);
+
+		_finderPathCountByG_G_S = new FinderPath(
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByG_G_S",
+			new String[] {
+				Long.class.getName(), Long.class.getName(),
+				Integer.class.getName()
+			},
+			new String[] {"groupId", "guestbookTId", "status"}, false);
 
 		_setGuestbookTEntryUtilPersistence(this);
 	}

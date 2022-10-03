@@ -79,6 +79,7 @@ public interface GuestbookTEntryLocalService
 	@Indexable(type = IndexableType.REINDEX)
 	public GuestbookTEntry addGuestbookTEntry(GuestbookTEntry guestbookTEntry);
 
+	@Indexable(type = IndexableType.REINDEX)
 	public GuestbookTEntry addGuestbookTEntry(
 			long userId, long guestbookTId, String name, String email,
 			String message, ServiceContext serviceContext)
@@ -99,6 +100,7 @@ public interface GuestbookTEntryLocalService
 	public PersistedModel createPersistedModel(Serializable primaryKeyObj)
 		throws PortalException;
 
+	@Indexable(type = IndexableType.DELETE)
 	public GuestbookTEntry deleteGuestbookEntry(GuestbookTEntry entry)
 		throws PortalException;
 
@@ -234,6 +236,18 @@ public interface GuestbookTEntryLocalService
 	public ExportActionableDynamicQuery getExportActionableDynamicQuery(
 		PortletDataContext portletDataContext);
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getGuestbookEntriesCount(long groupId, long guestbookId);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getGuestbookEntriesCount(
+			long groupId, long guestbookId, int status)
+		throws SystemException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public GuestbookTEntry getGuestbookEntry(long entryId)
+		throws PortalException;
+
 	/**
 	 * Returns a range of all the guestbook t entries.
 	 *
@@ -251,6 +265,21 @@ public interface GuestbookTEntryLocalService
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<GuestbookTEntry> getGuestbookTEntries(
 		long groupId, long guestbookId);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<GuestbookTEntry> getGuestbookTEntries(
+			long groupId, long guestbookId, int start, int end)
+		throws SystemException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<GuestbookTEntry> getGuestbookTEntries(
+			long groupId, long guestbookId, int status, int start, int end)
+		throws SystemException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<GuestbookTEntry> getGuestbookTEntries(
+		long groupId, long guestbookId, int start, int end,
+		OrderByComparator<GuestbookTEntry> obc);
 
 	/**
 	 * Returns all the guestbook t entries matching the UUID and company.
@@ -328,6 +357,7 @@ public interface GuestbookTEntryLocalService
 	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
 		throws PortalException;
 
+	@Indexable(type = IndexableType.REINDEX)
 	public GuestbookTEntry updateGuestbookEntry(
 			long userId, long guestbookId, long entryId, String name,
 			String email, String message, ServiceContext serviceContext)
@@ -346,5 +376,10 @@ public interface GuestbookTEntryLocalService
 	@Indexable(type = IndexableType.REINDEX)
 	public GuestbookTEntry updateGuestbookTEntry(
 		GuestbookTEntry guestbookTEntry);
+
+	public GuestbookTEntry updateStatus(
+			long userId, long guestbookId, long entryId, int status,
+			ServiceContext serviceContext)
+		throws PortalException, SystemException;
 
 }

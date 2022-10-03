@@ -264,6 +264,24 @@ public class GuestbookTEntryLocalServiceUtil {
 		return getService().getExportActionableDynamicQuery(portletDataContext);
 	}
 
+	public static int getGuestbookEntriesCount(long groupId, long guestbookId) {
+		return getService().getGuestbookEntriesCount(groupId, guestbookId);
+	}
+
+	public static int getGuestbookEntriesCount(
+			long groupId, long guestbookId, int status)
+		throws SystemException {
+
+		return getService().getGuestbookEntriesCount(
+			groupId, guestbookId, status);
+	}
+
+	public static GuestbookTEntry getGuestbookEntry(long entryId)
+		throws PortalException {
+
+		return getService().getGuestbookEntry(entryId);
+	}
+
 	/**
 	 * Returns a range of all the guestbook t entries.
 	 *
@@ -285,6 +303,30 @@ public class GuestbookTEntryLocalServiceUtil {
 		long groupId, long guestbookId) {
 
 		return getService().getGuestbookTEntries(groupId, guestbookId);
+	}
+
+	public static List<GuestbookTEntry> getGuestbookTEntries(
+			long groupId, long guestbookId, int start, int end)
+		throws SystemException {
+
+		return getService().getGuestbookTEntries(
+			groupId, guestbookId, start, end);
+	}
+
+	public static List<GuestbookTEntry> getGuestbookTEntries(
+			long groupId, long guestbookId, int status, int start, int end)
+		throws SystemException {
+
+		return getService().getGuestbookTEntries(
+			groupId, guestbookId, status, start, end);
+	}
+
+	public static List<GuestbookTEntry> getGuestbookTEntries(
+		long groupId, long guestbookId, int start, int end,
+		OrderByComparator<GuestbookTEntry> obc) {
+
+		return getService().getGuestbookTEntries(
+			groupId, guestbookId, start, end, obc);
 	}
 
 	/**
@@ -405,6 +447,15 @@ public class GuestbookTEntryLocalServiceUtil {
 		GuestbookTEntry guestbookTEntry) {
 
 		return getService().updateGuestbookTEntry(guestbookTEntry);
+	}
+
+	public static GuestbookTEntry updateStatus(
+			long userId, long guestbookId, long entryId, int status,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws PortalException, SystemException {
+
+		return getService().updateStatus(
+			userId, guestbookId, entryId, status, serviceContext);
 	}
 
 	public static GuestbookTEntryLocalService getService() {

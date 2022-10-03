@@ -257,6 +257,12 @@ public class GuestbookTLocalServiceUtil {
 		return getService().getGuestbooks(groupId);
 	}
 
+	public static List<GuestbookT> getGuestbooks(long groupId, int status)
+		throws SystemException {
+
+		return getService().getGuestbooks(groupId, status);
+	}
+
 	public static List<GuestbookT> getGuestbooks(
 		long groupId, int start, int end) {
 
@@ -402,6 +408,15 @@ public class GuestbookTLocalServiceUtil {
 
 		return getService().updateGuestbookT(
 			userId, guestbookTId, name, serviceContext);
+	}
+
+	public static GuestbookT updateStatus(
+			long userId, long guestbookTId, int status,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws PortalException, SystemException {
+
+		return getService().updateStatus(
+			userId, guestbookTId, status, serviceContext);
 	}
 
 	public static GuestbookTLocalService getService() {

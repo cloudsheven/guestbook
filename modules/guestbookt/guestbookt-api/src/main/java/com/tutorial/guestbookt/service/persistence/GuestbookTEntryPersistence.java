@@ -616,6 +616,390 @@ public interface GuestbookTEntryPersistence
 	public int filterCountByG_G(long groupId, long guestbookTId);
 
 	/**
+	 * Returns all the guestbook t entries where status = &#63;.
+	 *
+	 * @param status the status
+	 * @return the matching guestbook t entries
+	 */
+	public java.util.List<GuestbookTEntry> findByStatus(int status);
+
+	/**
+	 * Returns a range of all the guestbook t entries where status = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>GuestbookTEntryModelImpl</code>.
+	 * </p>
+	 *
+	 * @param status the status
+	 * @param start the lower bound of the range of guestbook t entries
+	 * @param end the upper bound of the range of guestbook t entries (not inclusive)
+	 * @return the range of matching guestbook t entries
+	 */
+	public java.util.List<GuestbookTEntry> findByStatus(
+		int status, int start, int end);
+
+	/**
+	 * Returns an ordered range of all the guestbook t entries where status = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>GuestbookTEntryModelImpl</code>.
+	 * </p>
+	 *
+	 * @param status the status
+	 * @param start the lower bound of the range of guestbook t entries
+	 * @param end the upper bound of the range of guestbook t entries (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching guestbook t entries
+	 */
+	public java.util.List<GuestbookTEntry> findByStatus(
+		int status, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<GuestbookTEntry>
+			orderByComparator);
+
+	/**
+	 * Returns an ordered range of all the guestbook t entries where status = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>GuestbookTEntryModelImpl</code>.
+	 * </p>
+	 *
+	 * @param status the status
+	 * @param start the lower bound of the range of guestbook t entries
+	 * @param end the upper bound of the range of guestbook t entries (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
+	 * @return the ordered range of matching guestbook t entries
+	 */
+	public java.util.List<GuestbookTEntry> findByStatus(
+		int status, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<GuestbookTEntry>
+			orderByComparator,
+		boolean useFinderCache);
+
+	/**
+	 * Returns the first guestbook t entry in the ordered set where status = &#63;.
+	 *
+	 * @param status the status
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching guestbook t entry
+	 * @throws NoSuchGuestbookTEntryException if a matching guestbook t entry could not be found
+	 */
+	public GuestbookTEntry findByStatus_First(
+			int status,
+			com.liferay.portal.kernel.util.OrderByComparator<GuestbookTEntry>
+				orderByComparator)
+		throws NoSuchGuestbookTEntryException;
+
+	/**
+	 * Returns the first guestbook t entry in the ordered set where status = &#63;.
+	 *
+	 * @param status the status
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching guestbook t entry, or <code>null</code> if a matching guestbook t entry could not be found
+	 */
+	public GuestbookTEntry fetchByStatus_First(
+		int status,
+		com.liferay.portal.kernel.util.OrderByComparator<GuestbookTEntry>
+			orderByComparator);
+
+	/**
+	 * Returns the last guestbook t entry in the ordered set where status = &#63;.
+	 *
+	 * @param status the status
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching guestbook t entry
+	 * @throws NoSuchGuestbookTEntryException if a matching guestbook t entry could not be found
+	 */
+	public GuestbookTEntry findByStatus_Last(
+			int status,
+			com.liferay.portal.kernel.util.OrderByComparator<GuestbookTEntry>
+				orderByComparator)
+		throws NoSuchGuestbookTEntryException;
+
+	/**
+	 * Returns the last guestbook t entry in the ordered set where status = &#63;.
+	 *
+	 * @param status the status
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching guestbook t entry, or <code>null</code> if a matching guestbook t entry could not be found
+	 */
+	public GuestbookTEntry fetchByStatus_Last(
+		int status,
+		com.liferay.portal.kernel.util.OrderByComparator<GuestbookTEntry>
+			orderByComparator);
+
+	/**
+	 * Returns the guestbook t entries before and after the current guestbook t entry in the ordered set where status = &#63;.
+	 *
+	 * @param entryId the primary key of the current guestbook t entry
+	 * @param status the status
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the previous, current, and next guestbook t entry
+	 * @throws NoSuchGuestbookTEntryException if a guestbook t entry with the primary key could not be found
+	 */
+	public GuestbookTEntry[] findByStatus_PrevAndNext(
+			long entryId, int status,
+			com.liferay.portal.kernel.util.OrderByComparator<GuestbookTEntry>
+				orderByComparator)
+		throws NoSuchGuestbookTEntryException;
+
+	/**
+	 * Removes all the guestbook t entries where status = &#63; from the database.
+	 *
+	 * @param status the status
+	 */
+	public void removeByStatus(int status);
+
+	/**
+	 * Returns the number of guestbook t entries where status = &#63;.
+	 *
+	 * @param status the status
+	 * @return the number of matching guestbook t entries
+	 */
+	public int countByStatus(int status);
+
+	/**
+	 * Returns all the guestbook t entries where groupId = &#63; and guestbookTId = &#63; and status = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param guestbookTId the guestbook t ID
+	 * @param status the status
+	 * @return the matching guestbook t entries
+	 */
+	public java.util.List<GuestbookTEntry> findByG_G_S(
+		long groupId, long guestbookTId, int status);
+
+	/**
+	 * Returns a range of all the guestbook t entries where groupId = &#63; and guestbookTId = &#63; and status = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>GuestbookTEntryModelImpl</code>.
+	 * </p>
+	 *
+	 * @param groupId the group ID
+	 * @param guestbookTId the guestbook t ID
+	 * @param status the status
+	 * @param start the lower bound of the range of guestbook t entries
+	 * @param end the upper bound of the range of guestbook t entries (not inclusive)
+	 * @return the range of matching guestbook t entries
+	 */
+	public java.util.List<GuestbookTEntry> findByG_G_S(
+		long groupId, long guestbookTId, int status, int start, int end);
+
+	/**
+	 * Returns an ordered range of all the guestbook t entries where groupId = &#63; and guestbookTId = &#63; and status = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>GuestbookTEntryModelImpl</code>.
+	 * </p>
+	 *
+	 * @param groupId the group ID
+	 * @param guestbookTId the guestbook t ID
+	 * @param status the status
+	 * @param start the lower bound of the range of guestbook t entries
+	 * @param end the upper bound of the range of guestbook t entries (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching guestbook t entries
+	 */
+	public java.util.List<GuestbookTEntry> findByG_G_S(
+		long groupId, long guestbookTId, int status, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<GuestbookTEntry>
+			orderByComparator);
+
+	/**
+	 * Returns an ordered range of all the guestbook t entries where groupId = &#63; and guestbookTId = &#63; and status = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>GuestbookTEntryModelImpl</code>.
+	 * </p>
+	 *
+	 * @param groupId the group ID
+	 * @param guestbookTId the guestbook t ID
+	 * @param status the status
+	 * @param start the lower bound of the range of guestbook t entries
+	 * @param end the upper bound of the range of guestbook t entries (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
+	 * @return the ordered range of matching guestbook t entries
+	 */
+	public java.util.List<GuestbookTEntry> findByG_G_S(
+		long groupId, long guestbookTId, int status, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<GuestbookTEntry>
+			orderByComparator,
+		boolean useFinderCache);
+
+	/**
+	 * Returns the first guestbook t entry in the ordered set where groupId = &#63; and guestbookTId = &#63; and status = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param guestbookTId the guestbook t ID
+	 * @param status the status
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching guestbook t entry
+	 * @throws NoSuchGuestbookTEntryException if a matching guestbook t entry could not be found
+	 */
+	public GuestbookTEntry findByG_G_S_First(
+			long groupId, long guestbookTId, int status,
+			com.liferay.portal.kernel.util.OrderByComparator<GuestbookTEntry>
+				orderByComparator)
+		throws NoSuchGuestbookTEntryException;
+
+	/**
+	 * Returns the first guestbook t entry in the ordered set where groupId = &#63; and guestbookTId = &#63; and status = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param guestbookTId the guestbook t ID
+	 * @param status the status
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching guestbook t entry, or <code>null</code> if a matching guestbook t entry could not be found
+	 */
+	public GuestbookTEntry fetchByG_G_S_First(
+		long groupId, long guestbookTId, int status,
+		com.liferay.portal.kernel.util.OrderByComparator<GuestbookTEntry>
+			orderByComparator);
+
+	/**
+	 * Returns the last guestbook t entry in the ordered set where groupId = &#63; and guestbookTId = &#63; and status = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param guestbookTId the guestbook t ID
+	 * @param status the status
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching guestbook t entry
+	 * @throws NoSuchGuestbookTEntryException if a matching guestbook t entry could not be found
+	 */
+	public GuestbookTEntry findByG_G_S_Last(
+			long groupId, long guestbookTId, int status,
+			com.liferay.portal.kernel.util.OrderByComparator<GuestbookTEntry>
+				orderByComparator)
+		throws NoSuchGuestbookTEntryException;
+
+	/**
+	 * Returns the last guestbook t entry in the ordered set where groupId = &#63; and guestbookTId = &#63; and status = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param guestbookTId the guestbook t ID
+	 * @param status the status
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching guestbook t entry, or <code>null</code> if a matching guestbook t entry could not be found
+	 */
+	public GuestbookTEntry fetchByG_G_S_Last(
+		long groupId, long guestbookTId, int status,
+		com.liferay.portal.kernel.util.OrderByComparator<GuestbookTEntry>
+			orderByComparator);
+
+	/**
+	 * Returns the guestbook t entries before and after the current guestbook t entry in the ordered set where groupId = &#63; and guestbookTId = &#63; and status = &#63;.
+	 *
+	 * @param entryId the primary key of the current guestbook t entry
+	 * @param groupId the group ID
+	 * @param guestbookTId the guestbook t ID
+	 * @param status the status
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the previous, current, and next guestbook t entry
+	 * @throws NoSuchGuestbookTEntryException if a guestbook t entry with the primary key could not be found
+	 */
+	public GuestbookTEntry[] findByG_G_S_PrevAndNext(
+			long entryId, long groupId, long guestbookTId, int status,
+			com.liferay.portal.kernel.util.OrderByComparator<GuestbookTEntry>
+				orderByComparator)
+		throws NoSuchGuestbookTEntryException;
+
+	/**
+	 * Returns all the guestbook t entries that the user has permission to view where groupId = &#63; and guestbookTId = &#63; and status = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param guestbookTId the guestbook t ID
+	 * @param status the status
+	 * @return the matching guestbook t entries that the user has permission to view
+	 */
+	public java.util.List<GuestbookTEntry> filterFindByG_G_S(
+		long groupId, long guestbookTId, int status);
+
+	/**
+	 * Returns a range of all the guestbook t entries that the user has permission to view where groupId = &#63; and guestbookTId = &#63; and status = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>GuestbookTEntryModelImpl</code>.
+	 * </p>
+	 *
+	 * @param groupId the group ID
+	 * @param guestbookTId the guestbook t ID
+	 * @param status the status
+	 * @param start the lower bound of the range of guestbook t entries
+	 * @param end the upper bound of the range of guestbook t entries (not inclusive)
+	 * @return the range of matching guestbook t entries that the user has permission to view
+	 */
+	public java.util.List<GuestbookTEntry> filterFindByG_G_S(
+		long groupId, long guestbookTId, int status, int start, int end);
+
+	/**
+	 * Returns an ordered range of all the guestbook t entries that the user has permissions to view where groupId = &#63; and guestbookTId = &#63; and status = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>GuestbookTEntryModelImpl</code>.
+	 * </p>
+	 *
+	 * @param groupId the group ID
+	 * @param guestbookTId the guestbook t ID
+	 * @param status the status
+	 * @param start the lower bound of the range of guestbook t entries
+	 * @param end the upper bound of the range of guestbook t entries (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching guestbook t entries that the user has permission to view
+	 */
+	public java.util.List<GuestbookTEntry> filterFindByG_G_S(
+		long groupId, long guestbookTId, int status, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<GuestbookTEntry>
+			orderByComparator);
+
+	/**
+	 * Returns the guestbook t entries before and after the current guestbook t entry in the ordered set of guestbook t entries that the user has permission to view where groupId = &#63; and guestbookTId = &#63; and status = &#63;.
+	 *
+	 * @param entryId the primary key of the current guestbook t entry
+	 * @param groupId the group ID
+	 * @param guestbookTId the guestbook t ID
+	 * @param status the status
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the previous, current, and next guestbook t entry
+	 * @throws NoSuchGuestbookTEntryException if a guestbook t entry with the primary key could not be found
+	 */
+	public GuestbookTEntry[] filterFindByG_G_S_PrevAndNext(
+			long entryId, long groupId, long guestbookTId, int status,
+			com.liferay.portal.kernel.util.OrderByComparator<GuestbookTEntry>
+				orderByComparator)
+		throws NoSuchGuestbookTEntryException;
+
+	/**
+	 * Removes all the guestbook t entries where groupId = &#63; and guestbookTId = &#63; and status = &#63; from the database.
+	 *
+	 * @param groupId the group ID
+	 * @param guestbookTId the guestbook t ID
+	 * @param status the status
+	 */
+	public void removeByG_G_S(long groupId, long guestbookTId, int status);
+
+	/**
+	 * Returns the number of guestbook t entries where groupId = &#63; and guestbookTId = &#63; and status = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param guestbookTId the guestbook t ID
+	 * @param status the status
+	 * @return the number of matching guestbook t entries
+	 */
+	public int countByG_G_S(long groupId, long guestbookTId, int status);
+
+	/**
+	 * Returns the number of guestbook t entries that the user has permission to view where groupId = &#63; and guestbookTId = &#63; and status = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param guestbookTId the guestbook t ID
+	 * @param status the status
+	 * @return the number of matching guestbook t entries that the user has permission to view
+	 */
+	public int filterCountByG_G_S(long groupId, long guestbookTId, int status);
+
+	/**
 	 * Caches the guestbook t entry in the entity cache if it is enabled.
 	 *
 	 * @param guestbookTEntry the guestbook t entry

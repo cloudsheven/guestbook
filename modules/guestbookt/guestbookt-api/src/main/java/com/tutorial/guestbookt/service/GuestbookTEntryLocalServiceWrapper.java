@@ -296,6 +296,29 @@ public class GuestbookTEntryLocalServiceWrapper
 			portletDataContext);
 	}
 
+	@Override
+	public int getGuestbookEntriesCount(long groupId, long guestbookId) {
+		return _guestbookTEntryLocalService.getGuestbookEntriesCount(
+			groupId, guestbookId);
+	}
+
+	@Override
+	public int getGuestbookEntriesCount(
+			long groupId, long guestbookId, int status)
+		throws com.liferay.portal.kernel.exception.SystemException {
+
+		return _guestbookTEntryLocalService.getGuestbookEntriesCount(
+			groupId, guestbookId, status);
+	}
+
+	@Override
+	public com.tutorial.guestbookt.model.GuestbookTEntry getGuestbookEntry(
+			long entryId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _guestbookTEntryLocalService.getGuestbookEntry(entryId);
+	}
+
 	/**
 	 * Returns a range of all the guestbook t entries.
 	 *
@@ -320,6 +343,37 @@ public class GuestbookTEntryLocalServiceWrapper
 
 		return _guestbookTEntryLocalService.getGuestbookTEntries(
 			groupId, guestbookId);
+	}
+
+	@Override
+	public java.util.List<com.tutorial.guestbookt.model.GuestbookTEntry>
+			getGuestbookTEntries(
+				long groupId, long guestbookId, int start, int end)
+		throws com.liferay.portal.kernel.exception.SystemException {
+
+		return _guestbookTEntryLocalService.getGuestbookTEntries(
+			groupId, guestbookId, start, end);
+	}
+
+	@Override
+	public java.util.List<com.tutorial.guestbookt.model.GuestbookTEntry>
+			getGuestbookTEntries(
+				long groupId, long guestbookId, int status, int start, int end)
+		throws com.liferay.portal.kernel.exception.SystemException {
+
+		return _guestbookTEntryLocalService.getGuestbookTEntries(
+			groupId, guestbookId, status, start, end);
+	}
+
+	@Override
+	public java.util.List<com.tutorial.guestbookt.model.GuestbookTEntry>
+		getGuestbookTEntries(
+			long groupId, long guestbookId, int start, int end,
+			com.liferay.portal.kernel.util.OrderByComparator
+				<com.tutorial.guestbookt.model.GuestbookTEntry> obc) {
+
+		return _guestbookTEntryLocalService.getGuestbookTEntries(
+			groupId, guestbookId, start, end, obc);
 	}
 
 	/**
@@ -459,6 +513,17 @@ public class GuestbookTEntryLocalServiceWrapper
 
 		return _guestbookTEntryLocalService.updateGuestbookTEntry(
 			guestbookTEntry);
+	}
+
+	@Override
+	public com.tutorial.guestbookt.model.GuestbookTEntry updateStatus(
+			long userId, long guestbookId, long entryId, int status,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			   com.liferay.portal.kernel.exception.SystemException {
+
+		return _guestbookTEntryLocalService.updateStatus(
+			userId, guestbookId, entryId, status, serviceContext);
 	}
 
 	@Override

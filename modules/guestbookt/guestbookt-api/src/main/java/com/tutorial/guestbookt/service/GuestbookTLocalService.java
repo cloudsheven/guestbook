@@ -65,6 +65,7 @@ public interface GuestbookTLocalService
 	 *
 	 * Never modify this interface directly. Add custom service methods to <code>com.tutorial.guestbookt.service.impl.GuestbookTLocalServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface. Consume the guestbook t local service via injection or a <code>org.osgi.util.tracker.ServiceTracker</code>. Use {@link GuestbookTLocalServiceUtil} if injection and service tracking are not available.
 	 */
+	@Indexable(type = IndexableType.REINDEX)
 	public GuestbookT addGuestbook(
 			long userId, String name, ServiceContext serviceContext)
 		throws PortalException;
@@ -125,6 +126,7 @@ public interface GuestbookTLocalService
 	public GuestbookT deleteGuestbookT(long guestbookTId)
 		throws PortalException;
 
+	@Indexable(type = IndexableType.DELETE)
 	public GuestbookT deleteGuestbookT(
 			long guestbookTId, ServiceContext serviceContext)
 		throws PortalException, SystemException;
@@ -231,6 +233,10 @@ public interface GuestbookTLocalService
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<GuestbookT> getGuestbooks(long groupId);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<GuestbookT> getGuestbooks(long groupId, int status)
+		throws SystemException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<GuestbookT> getGuestbooks(long groupId, int start, int end);
@@ -343,8 +349,14 @@ public interface GuestbookTLocalService
 	@Indexable(type = IndexableType.REINDEX)
 	public GuestbookT updateGuestbookT(GuestbookT guestbookT);
 
+	@Indexable(type = IndexableType.REINDEX)
 	public GuestbookT updateGuestbookT(
 			long userId, long guestbookTId, String name,
+			ServiceContext serviceContext)
+		throws PortalException, SystemException;
+
+	public GuestbookT updateStatus(
+			long userId, long guestbookTId, int status,
 			ServiceContext serviceContext)
 		throws PortalException, SystemException;
 

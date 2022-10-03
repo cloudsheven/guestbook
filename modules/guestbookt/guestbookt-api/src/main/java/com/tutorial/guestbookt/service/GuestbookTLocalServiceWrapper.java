@@ -295,6 +295,14 @@ public class GuestbookTLocalServiceWrapper
 
 	@Override
 	public java.util.List<com.tutorial.guestbookt.model.GuestbookT>
+			getGuestbooks(long groupId, int status)
+		throws com.liferay.portal.kernel.exception.SystemException {
+
+		return _guestbookTLocalService.getGuestbooks(groupId, status);
+	}
+
+	@Override
+	public java.util.List<com.tutorial.guestbookt.model.GuestbookT>
 		getGuestbooks(long groupId, int start, int end) {
 
 		return _guestbookTLocalService.getGuestbooks(groupId, start, end);
@@ -465,6 +473,17 @@ public class GuestbookTLocalServiceWrapper
 
 		return _guestbookTLocalService.updateGuestbookT(
 			userId, guestbookTId, name, serviceContext);
+	}
+
+	@Override
+	public com.tutorial.guestbookt.model.GuestbookT updateStatus(
+			long userId, long guestbookTId, int status,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			   com.liferay.portal.kernel.exception.SystemException {
+
+		return _guestbookTLocalService.updateStatus(
+			userId, guestbookTId, status, serviceContext);
 	}
 
 	@Override
