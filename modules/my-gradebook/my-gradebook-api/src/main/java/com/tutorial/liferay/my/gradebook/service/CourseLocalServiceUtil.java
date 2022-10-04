@@ -267,6 +267,10 @@ public class CourseLocalServiceUtil {
 		return getService().getCourses(start, end);
 	}
 
+	public static List<Course> getCourses(long groupId, long myGradebookId) {
+		return getService().getCourses(groupId, myGradebookId);
+	}
+
 	/**
 	 * Returns all the courses matching the UUID and company.
 	 *

@@ -25,7 +25,7 @@ import org.osgi.service.component.annotations.Component;
  */
 @Component(
 	property = {
-		"json.web.service.context.name=mygradebook",
+		"json.web.service.context.name=mygdb",
 		"json.web.service.context.path=Course"
 	},
 	service = AopService.class

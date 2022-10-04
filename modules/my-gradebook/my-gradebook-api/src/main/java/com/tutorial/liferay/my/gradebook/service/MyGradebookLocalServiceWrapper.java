@@ -37,6 +37,16 @@ public class MyGradebookLocalServiceWrapper
 		_myGradebookLocalService = myGradebookLocalService;
 	}
 
+	@Override
+	public com.tutorial.liferay.my.gradebook.model.MyGradebook addMyGradebook(
+			long userId, String name,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _myGradebookLocalService.addMyGradebook(
+			userId, name, serviceContext);
+	}
+
 	/**
 	 * Adds the my gradebook to the database. Also notifies the appropriate model listeners.
 	 *
@@ -95,6 +105,18 @@ public class MyGradebookLocalServiceWrapper
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _myGradebookLocalService.deleteMyGradebook(myGradebookId);
+	}
+
+	@Override
+	public com.tutorial.liferay.my.gradebook.model.MyGradebook
+			deleteMyGradebook(
+				long myGradebookId,
+				com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			   com.liferay.portal.kernel.exception.SystemException {
+
+		return _myGradebookLocalService.deleteMyGradebook(
+			myGradebookId, serviceContext);
 	}
 
 	/**
@@ -390,6 +412,18 @@ public class MyGradebookLocalServiceWrapper
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _myGradebookLocalService.getPersistedModel(primaryKeyObj);
+	}
+
+	@Override
+	public com.tutorial.liferay.my.gradebook.model.MyGradebook
+			updateMyGradebook(
+				long userId, long myGradebookId, String name,
+				com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			   com.liferay.portal.kernel.exception.SystemException {
+
+		return _myGradebookLocalService.updateMyGradebook(
+			userId, myGradebookId, name, serviceContext);
 	}
 
 	/**

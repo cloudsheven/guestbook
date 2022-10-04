@@ -11,24 +11,28 @@
  * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
  * details.
  */
+package com.tutorial.liferay.my.gradebook.exception;
 
-package com.tutorial.liferay.my.gradebook.service.impl;
-
-import com.liferay.portal.aop.AopService;
-
-import com.tutorial.liferay.my.gradebook.service.base.GradebookServiceBaseImpl;
-
-import org.osgi.service.component.annotations.Component;
+import com.liferay.portal.kernel.exception.PortalException;
 
 /**
  * @author Andrea Luzzi
  */
-@Component(
-	property = {
-		"json.web.service.context.name=mygradebook",
-		"json.web.service.context.path=Gradebook"
-	},
-	service = AopService.class
-)
-public class GradebookServiceImpl extends GradebookServiceBaseImpl {
+public class MyGradebookNameException extends PortalException {
+
+	public MyGradebookNameException() {
+	}
+
+	public MyGradebookNameException(String msg) {
+		super(msg);
+	}
+
+	public MyGradebookNameException(String msg, Throwable throwable) {
+		super(msg, throwable);
+	}
+
+	public MyGradebookNameException(Throwable throwable) {
+		super(throwable);
+	}
+
 }

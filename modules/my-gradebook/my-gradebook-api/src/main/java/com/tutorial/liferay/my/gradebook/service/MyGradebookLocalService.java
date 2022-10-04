@@ -28,6 +28,7 @@ import com.liferay.portal.kernel.search.Indexable;
 import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.service.BaseLocalService;
 import com.liferay.portal.kernel.service.PersistedModelLocalService;
+import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.transaction.Isolation;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.Transactional;
@@ -64,6 +65,9 @@ public interface MyGradebookLocalService
 	 *
 	 * Never modify this interface directly. Add custom service methods to <code>com.tutorial.liferay.my.gradebook.service.impl.MyGradebookLocalServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface. Consume the my gradebook local service via injection or a <code>org.osgi.util.tracker.ServiceTracker</code>. Use {@link MyGradebookLocalServiceUtil} if injection and service tracking are not available.
 	 */
+	public MyGradebook addMyGradebook(
+			long userId, String name, ServiceContext serviceContext)
+		throws PortalException;
 
 	/**
 	 * Adds the my gradebook to the database. Also notifies the appropriate model listeners.
@@ -107,6 +111,10 @@ public interface MyGradebookLocalService
 	@Indexable(type = IndexableType.DELETE)
 	public MyGradebook deleteMyGradebook(long myGradebookId)
 		throws PortalException;
+
+	public MyGradebook deleteMyGradebook(
+			long myGradebookId, ServiceContext serviceContext)
+		throws PortalException, SystemException;
 
 	/**
 	 * Deletes the my gradebook from the database. Also notifies the appropriate model listeners.
@@ -309,6 +317,11 @@ public interface MyGradebookLocalService
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
 		throws PortalException;
+
+	public MyGradebook updateMyGradebook(
+			long userId, long myGradebookId, String name,
+			ServiceContext serviceContext)
+		throws PortalException, SystemException;
 
 	/**
 	 * Updates the my gradebook in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.

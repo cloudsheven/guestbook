@@ -95,6 +95,13 @@
 			<finder-column name="courseId" />
 		</finder>
 		
-	</entity>		
+	</entity>	
+	
+	<!-- EXCEPTIONS -->
+	
+<exceptions>
+	<exception>MyGradebookName</exception>
+</exceptions>
+		
 		
 </service-builder>

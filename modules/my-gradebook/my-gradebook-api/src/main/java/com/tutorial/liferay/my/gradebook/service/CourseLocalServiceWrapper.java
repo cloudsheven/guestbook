@@ -300,6 +300,13 @@ public class CourseLocalServiceWrapper
 		return _courseLocalService.getCourses(start, end);
 	}
 
+	@Override
+	public java.util.List<com.tutorial.liferay.my.gradebook.model.Course>
+		getCourses(long groupId, long myGradebookId) {
+
+		return _courseLocalService.getCourses(groupId, myGradebookId);
+	}
+
 	/**
 	 * Returns all the courses matching the UUID and company.
 	 *

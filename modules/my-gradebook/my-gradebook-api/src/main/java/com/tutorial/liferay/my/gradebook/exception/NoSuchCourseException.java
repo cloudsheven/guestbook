@@ -11,7 +11,6 @@
  * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
  * details.
  */
-
 package com.tutorial.liferay.my.gradebook.exception;
 
 import com.liferay.portal.kernel.exception.NoSuchModelException;

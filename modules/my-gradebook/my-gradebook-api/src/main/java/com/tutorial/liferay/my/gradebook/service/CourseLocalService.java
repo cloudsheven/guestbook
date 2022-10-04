@@ -251,6 +251,9 @@ public interface CourseLocalService
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<Course> getCourses(int start, int end);
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<Course> getCourses(long groupId, long myGradebookId);
+
 	/**
 	 * Returns all the courses matching the UUID and company.
 	 *

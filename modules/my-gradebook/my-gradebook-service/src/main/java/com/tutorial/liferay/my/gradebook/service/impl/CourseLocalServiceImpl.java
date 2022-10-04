@@ -15,7 +15,10 @@
 package com.tutorial.liferay.my.gradebook.service.impl;
 
 import com.liferay.portal.aop.AopService;
+import com.tutorial.liferay.my.gradebook.model.Course;
 import com.tutorial.liferay.my.gradebook.service.base.CourseLocalServiceBaseImpl;
+
+import java.util.List;
 
 import org.osgi.service.component.annotations.Component;
 
@@ -28,5 +31,7 @@ import org.osgi.service.component.annotations.Component;
 )
 public class CourseLocalServiceImpl extends CourseLocalServiceBaseImpl {
 	
-
+	public List<Course> getCourses(long groupId, long myGradebookId) {
+		return coursePersistence.findByG_G(groupId, myGradebookId);
+	}
 }

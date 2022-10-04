@@ -17,6 +17,7 @@ package com.tutorial.liferay.my.gradebook.service;
 import com.liferay.petra.sql.dsl.query.DSLQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.model.PersistedModel;
 import com.liferay.portal.kernel.util.OrderByComparator;
 
@@ -45,6 +46,13 @@ public class MyGradebookLocalServiceUtil {
 	 *
 	 * Never modify this class directly. Add custom service methods to <code>com.tutorial.liferay.my.gradebook.service.impl.MyGradebookLocalServiceImpl</code> and rerun ServiceBuilder to regenerate this class.
 	 */
+	public static MyGradebook addMyGradebook(
+			long userId, String name,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws PortalException {
+
+		return getService().addMyGradebook(userId, name, serviceContext);
+	}
 
 	/**
 	 * Adds the my gradebook to the database. Also notifies the appropriate model listeners.
@@ -95,6 +103,14 @@ public class MyGradebookLocalServiceUtil {
 		throws PortalException {
 
 		return getService().deleteMyGradebook(myGradebookId);
+	}
+
+	public static MyGradebook deleteMyGradebook(
+			long myGradebookId,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws PortalException, SystemException {
+
+		return getService().deleteMyGradebook(myGradebookId, serviceContext);
 	}
 
 	/**
@@ -343,6 +359,15 @@ public class MyGradebookLocalServiceUtil {
 		throws PortalException {
 
 		return getService().getPersistedModel(primaryKeyObj);
+	}
+
+	public static MyGradebook updateMyGradebook(
+			long userId, long myGradebookId, String name,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws PortalException, SystemException {
+
+		return getService().updateMyGradebook(
+			userId, myGradebookId, name, serviceContext);
 	}
 
 	/**
