@@ -31,6 +31,7 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
 import com.tutorial.liferay.my.gradebook.model.MyGradebook;
 import com.tutorial.liferay.my.gradebook.model.MyGradebookModel;
@@ -79,7 +80,9 @@ public class MyGradebookModelImpl
 		{"name", Types.VARCHAR}, {"groupId", Types.BIGINT},
 		{"companyId", Types.BIGINT}, {"userId", Types.BIGINT},
 		{"userName", Types.VARCHAR}, {"createDate", Types.TIMESTAMP},
-		{"modifiedDate", Types.TIMESTAMP}
+		{"modifiedDate", Types.TIMESTAMP}, {"status", Types.INTEGER},
+		{"statusByUserId", Types.BIGINT}, {"statusByUserName", Types.VARCHAR},
+		{"statusDate", Types.TIMESTAMP}
 	};
 
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP =
@@ -95,10 +98,14 @@ public class MyGradebookModelImpl
 		TABLE_COLUMNS_MAP.put("userName", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("createDate", Types.TIMESTAMP);
 		TABLE_COLUMNS_MAP.put("modifiedDate", Types.TIMESTAMP);
+		TABLE_COLUMNS_MAP.put("status", Types.INTEGER);
+		TABLE_COLUMNS_MAP.put("statusByUserId", Types.BIGINT);
+		TABLE_COLUMNS_MAP.put("statusByUserName", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("statusDate", Types.TIMESTAMP);
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table MYGDB_MyGradebook (uuid_ VARCHAR(75) null,myGradebookId LONG not null primary key,name VARCHAR(75) null,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null)";
+		"create table MYGDB_MyGradebook (uuid_ VARCHAR(75) null,myGradebookId LONG not null primary key,name VARCHAR(75) null,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,status INTEGER,statusByUserId LONG,statusByUserName VARCHAR(75) null,statusDate DATE null)";
 
 	public static final String TABLE_SQL_DROP = "drop table MYGDB_MyGradebook";
 
@@ -311,6 +318,23 @@ public class MyGradebookModelImpl
 		attributeSetterBiConsumers.put(
 			"modifiedDate",
 			(BiConsumer<MyGradebook, Date>)MyGradebook::setModifiedDate);
+		attributeGetterFunctions.put("status", MyGradebook::getStatus);
+		attributeSetterBiConsumers.put(
+			"status", (BiConsumer<MyGradebook, Integer>)MyGradebook::setStatus);
+		attributeGetterFunctions.put(
+			"statusByUserId", MyGradebook::getStatusByUserId);
+		attributeSetterBiConsumers.put(
+			"statusByUserId",
+			(BiConsumer<MyGradebook, Long>)MyGradebook::setStatusByUserId);
+		attributeGetterFunctions.put(
+			"statusByUserName", MyGradebook::getStatusByUserName);
+		attributeSetterBiConsumers.put(
+			"statusByUserName",
+			(BiConsumer<MyGradebook, String>)MyGradebook::setStatusByUserName);
+		attributeGetterFunctions.put("statusDate", MyGradebook::getStatusDate);
+		attributeSetterBiConsumers.put(
+			"statusDate",
+			(BiConsumer<MyGradebook, Date>)MyGradebook::setStatusDate);
 
 		_attributeGetterFunctions = Collections.unmodifiableMap(
 			attributeGetterFunctions);
@@ -518,10 +542,171 @@ public class MyGradebookModelImpl
 		_modifiedDate = modifiedDate;
 	}
 
+	@JSON
+	@Override
+	public int getStatus() {
+		return _status;
+	}
+
+	@Override
+	public void setStatus(int status) {
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
+		}
+
+		_status = status;
+	}
+
+	@JSON
+	@Override
+	public long getStatusByUserId() {
+		return _statusByUserId;
+	}
+
+	@Override
+	public void setStatusByUserId(long statusByUserId) {
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
+		}
+
+		_statusByUserId = statusByUserId;
+	}
+
+	@Override
+	public String getStatusByUserUuid() {
+		try {
+			User user = UserLocalServiceUtil.getUserById(getStatusByUserId());
+
+			return user.getUuid();
+		}
+		catch (PortalException portalException) {
+			return "";
+		}
+	}
+
+	@Override
+	public void setStatusByUserUuid(String statusByUserUuid) {
+	}
+
+	@JSON
+	@Override
+	public String getStatusByUserName() {
+		if (_statusByUserName == null) {
+			return "";
+		}
+		else {
+			return _statusByUserName;
+		}
+	}
+
+	@Override
+	public void setStatusByUserName(String statusByUserName) {
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
+		}
+
+		_statusByUserName = statusByUserName;
+	}
+
+	@JSON
+	@Override
+	public Date getStatusDate() {
+		return _statusDate;
+	}
+
+	@Override
+	public void setStatusDate(Date statusDate) {
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
+		}
+
+		_statusDate = statusDate;
+	}
+
 	@Override
 	public StagedModelType getStagedModelType() {
 		return new StagedModelType(
 			PortalUtil.getClassNameId(MyGradebook.class.getName()));
+	}
+
+	@Override
+	public boolean isApproved() {
+		if (getStatus() == WorkflowConstants.STATUS_APPROVED) {
+			return true;
+		}
+		else {
+			return false;
+		}
+	}
+
+	@Override
+	public boolean isDenied() {
+		if (getStatus() == WorkflowConstants.STATUS_DENIED) {
+			return true;
+		}
+		else {
+			return false;
+		}
+	}
+
+	@Override
+	public boolean isDraft() {
+		if (getStatus() == WorkflowConstants.STATUS_DRAFT) {
+			return true;
+		}
+		else {
+			return false;
+		}
+	}
+
+	@Override
+	public boolean isExpired() {
+		if (getStatus() == WorkflowConstants.STATUS_EXPIRED) {
+			return true;
+		}
+		else {
+			return false;
+		}
+	}
+
+	@Override
+	public boolean isInactive() {
+		if (getStatus() == WorkflowConstants.STATUS_INACTIVE) {
+			return true;
+		}
+		else {
+			return false;
+		}
+	}
+
+	@Override
+	public boolean isIncomplete() {
+		if (getStatus() == WorkflowConstants.STATUS_INCOMPLETE) {
+			return true;
+		}
+		else {
+			return false;
+		}
+	}
+
+	@Override
+	public boolean isPending() {
+		if (getStatus() == WorkflowConstants.STATUS_PENDING) {
+			return true;
+		}
+		else {
+			return false;
+		}
+	}
+
+	@Override
+	public boolean isScheduled() {
+		if (getStatus() == WorkflowConstants.STATUS_SCHEDULED) {
+			return true;
+		}
+		else {
+			return false;
+		}
 	}
 
 	public long getColumnBitmask() {
@@ -589,6 +774,10 @@ public class MyGradebookModelImpl
 		myGradebookImpl.setUserName(getUserName());
 		myGradebookImpl.setCreateDate(getCreateDate());
 		myGradebookImpl.setModifiedDate(getModifiedDate());
+		myGradebookImpl.setStatus(getStatus());
+		myGradebookImpl.setStatusByUserId(getStatusByUserId());
+		myGradebookImpl.setStatusByUserName(getStatusByUserName());
+		myGradebookImpl.setStatusDate(getStatusDate());
 
 		myGradebookImpl.resetOriginalValues();
 
@@ -614,6 +803,14 @@ public class MyGradebookModelImpl
 			this.<Date>getColumnOriginalValue("createDate"));
 		myGradebookImpl.setModifiedDate(
 			this.<Date>getColumnOriginalValue("modifiedDate"));
+		myGradebookImpl.setStatus(
+			this.<Integer>getColumnOriginalValue("status"));
+		myGradebookImpl.setStatusByUserId(
+			this.<Long>getColumnOriginalValue("statusByUserId"));
+		myGradebookImpl.setStatusByUserName(
+			this.<String>getColumnOriginalValue("statusByUserName"));
+		myGradebookImpl.setStatusDate(
+			this.<Date>getColumnOriginalValue("statusDate"));
 
 		return myGradebookImpl;
 	}
@@ -742,6 +939,27 @@ public class MyGradebookModelImpl
 			myGradebookCacheModel.modifiedDate = Long.MIN_VALUE;
 		}
 
+		myGradebookCacheModel.status = getStatus();
+
+		myGradebookCacheModel.statusByUserId = getStatusByUserId();
+
+		myGradebookCacheModel.statusByUserName = getStatusByUserName();
+
+		String statusByUserName = myGradebookCacheModel.statusByUserName;
+
+		if ((statusByUserName != null) && (statusByUserName.length() == 0)) {
+			myGradebookCacheModel.statusByUserName = null;
+		}
+
+		Date statusDate = getStatusDate();
+
+		if (statusDate != null) {
+			myGradebookCacheModel.statusDate = statusDate.getTime();
+		}
+		else {
+			myGradebookCacheModel.statusDate = Long.MIN_VALUE;
+		}
+
 		return myGradebookCacheModel;
 	}
 
@@ -842,6 +1060,10 @@ public class MyGradebookModelImpl
 	private Date _createDate;
 	private Date _modifiedDate;
 	private boolean _setModifiedDate;
+	private int _status;
+	private long _statusByUserId;
+	private String _statusByUserName;
+	private Date _statusDate;
 
 	public <T> T getColumnValue(String columnName) {
 		columnName = _attributeNames.getOrDefault(columnName, columnName);
@@ -881,6 +1103,10 @@ public class MyGradebookModelImpl
 		_columnOriginalValues.put("userName", _userName);
 		_columnOriginalValues.put("createDate", _createDate);
 		_columnOriginalValues.put("modifiedDate", _modifiedDate);
+		_columnOriginalValues.put("status", _status);
+		_columnOriginalValues.put("statusByUserId", _statusByUserId);
+		_columnOriginalValues.put("statusByUserName", _statusByUserName);
+		_columnOriginalValues.put("statusDate", _statusDate);
 	}
 
 	private static final Map<String, String> _attributeNames;
@@ -921,6 +1147,14 @@ public class MyGradebookModelImpl
 		columnBitmasks.put("createDate", 128L);
 
 		columnBitmasks.put("modifiedDate", 256L);
+
+		columnBitmasks.put("status", 512L);
+
+		columnBitmasks.put("statusByUserId", 1024L);
+
+		columnBitmasks.put("statusByUserName", 2048L);
+
+		columnBitmasks.put("statusDate", 4096L);
 
 		_columnBitmasks = Collections.unmodifiableMap(columnBitmasks);
 	}

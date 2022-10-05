@@ -50,6 +50,16 @@ public class MyGradebookTable extends BaseTable<MyGradebookTable> {
 		"createDate", Date.class, Types.TIMESTAMP, Column.FLAG_DEFAULT);
 	public final Column<MyGradebookTable, Date> modifiedDate = createColumn(
 		"modifiedDate", Date.class, Types.TIMESTAMP, Column.FLAG_DEFAULT);
+	public final Column<MyGradebookTable, Integer> status = createColumn(
+		"status", Integer.class, Types.INTEGER, Column.FLAG_DEFAULT);
+	public final Column<MyGradebookTable, Long> statusByUserId = createColumn(
+		"statusByUserId", Long.class, Types.BIGINT, Column.FLAG_DEFAULT);
+	public final Column<MyGradebookTable, String> statusByUserName =
+		createColumn(
+			"statusByUserName", String.class, Types.VARCHAR,
+			Column.FLAG_DEFAULT);
+	public final Column<MyGradebookTable, Date> statusDate = createColumn(
+		"statusDate", Date.class, Types.TIMESTAMP, Column.FLAG_DEFAULT);
 
 	private MyGradebookTable() {
 		super("MYGDB_MyGradebook", MyGradebookTable::new);

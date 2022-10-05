@@ -346,6 +346,13 @@ public class MyGradebookLocalServiceWrapper
 		return _myGradebookLocalService.getMyGradebooks(start, end);
 	}
 
+	@Override
+	public java.util.List<com.tutorial.liferay.my.gradebook.model.MyGradebook>
+		getMyGradebooks(long groupId, int start, int end) {
+
+		return _myGradebookLocalService.getMyGradebooks(groupId, start, end);
+	}
+
 	/**
 	 * Returns all the my gradebooks matching the UUID and company.
 	 *
@@ -391,6 +398,11 @@ public class MyGradebookLocalServiceWrapper
 	@Override
 	public int getMyGradebooksCount() {
 		return _myGradebookLocalService.getMyGradebooksCount();
+	}
+
+	@Override
+	public int getMyGradebooksCount(long groupId) {
+		return _myGradebookLocalService.getMyGradebooksCount(groupId);
 	}
 
 	/**
@@ -442,6 +454,17 @@ public class MyGradebookLocalServiceWrapper
 			com.tutorial.liferay.my.gradebook.model.MyGradebook myGradebook) {
 
 		return _myGradebookLocalService.updateMyGradebook(myGradebook);
+	}
+
+	@Override
+	public com.tutorial.liferay.my.gradebook.model.MyGradebook updateStatus(
+			long userId, long myGradebookId, int status,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			   com.liferay.portal.kernel.exception.SystemException {
+
+		return _myGradebookLocalService.updateStatus(
+			userId, myGradebookId, status, serviceContext);
 	}
 
 	@Override

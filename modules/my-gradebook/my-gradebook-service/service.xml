@@ -21,18 +21,30 @@
 		<column name="userName" type="String" />
 		<column name="createDate" type="Date" />
 		<column name="modifiedDate" type="Date" />		
+					
+		<!-- Status fields -->
+		<column type="int" name="status"></column>
+		<column type="long" name="statusByUserId"></column>	
+		<column type="String" name="statusByUserName"></column>
+		<column type="Date" name="statusDate"></column> 
 		
 		<!-- finder -->
 		<finder name="GroupId" return-type="Collection">
 			<finder-column name="groupId" />
 		</finder>	
+		
+		<!-- asset redy -->
+		<reference package-path="com.liferay.portlet.asset" entity="AssetEntry" />
+		<reference package-path="com.liferay.portlet.asset" entity="AssetLink" />
+		
+		<!-- workflow ready -->
+		<reference entity="WorkflowInstanceLink" package-path="com.liferay.portal" />
+	</entity>	
 	
-	</entity>
-	
-	
+	<!-- entity Course -->
 	<entity name="Course" local-service="true" remote-service="true" uuid="true">
 		
-		<!-- entity Course -->
+		<!-- identity fields Course -->
 		<column name="courseId" type="long" primary="true" />
 		<column name="myGradebookId" type="long" />
 		<column name="name" type="String" />

@@ -303,6 +303,12 @@ public class MyGradebookLocalServiceUtil {
 		return getService().getMyGradebooks(start, end);
 	}
 
+	public static List<MyGradebook> getMyGradebooks(
+		long groupId, int start, int end) {
+
+		return getService().getMyGradebooks(groupId, start, end);
+	}
+
 	/**
 	 * Returns all the my gradebooks matching the UUID and company.
 	 *
@@ -341,6 +347,10 @@ public class MyGradebookLocalServiceUtil {
 	 */
 	public static int getMyGradebooksCount() {
 		return getService().getMyGradebooksCount();
+	}
+
+	public static int getMyGradebooksCount(long groupId) {
+		return getService().getMyGradebooksCount(groupId);
 	}
 
 	/**
@@ -382,6 +392,15 @@ public class MyGradebookLocalServiceUtil {
 	 */
 	public static MyGradebook updateMyGradebook(MyGradebook myGradebook) {
 		return getService().updateMyGradebook(myGradebook);
+	}
+
+	public static MyGradebook updateStatus(
+			long userId, long myGradebookId, int status,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws PortalException, SystemException {
+
+		return getService().updateStatus(
+			userId, myGradebookId, status, serviceContext);
 	}
 
 	public static MyGradebookLocalService getService() {

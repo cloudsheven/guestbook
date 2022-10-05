@@ -269,6 +269,9 @@ public interface MyGradebookLocalService
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<MyGradebook> getMyGradebooks(int start, int end);
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<MyGradebook> getMyGradebooks(long groupId, int start, int end);
+
 	/**
 	 * Returns all the my gradebooks matching the UUID and company.
 	 *
@@ -303,6 +306,9 @@ public interface MyGradebookLocalService
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getMyGradebooksCount();
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getMyGradebooksCount(long groupId);
+
 	/**
 	 * Returns the OSGi service identifier.
 	 *
@@ -335,5 +341,10 @@ public interface MyGradebookLocalService
 	 */
 	@Indexable(type = IndexableType.REINDEX)
 	public MyGradebook updateMyGradebook(MyGradebook myGradebook);
+
+	public MyGradebook updateStatus(
+			long userId, long myGradebookId, int status,
+			ServiceContext serviceContext)
+		throws PortalException, SystemException;
 
 }

@@ -14,13 +14,19 @@
 
 package com.tutorial.liferay.my.gradebook.service.impl;
 
+import com.liferay.asset.kernel.model.AssetEntry;
+import com.liferay.asset.kernel.model.AssetLink;
+import com.liferay.asset.kernel.model.AssetLinkConstants;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.model.ResourceConstants;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
+import com.liferay.portal.kernel.workflow.WorkflowHandlerRegistryUtil;
 import com.tutorial.liferay.my.gradebook.exception.MyGradebookNameException;
 import com.tutorial.liferay.my.gradebook.model.Course;
 import com.tutorial.liferay.my.gradebook.model.MyGradebook;
@@ -81,6 +87,40 @@ public class MyGradebookLocalServiceImpl
 				true,
 				true);
 		
+		AssetEntry assetEntry = assetEntryLocalService.updateEntry(
+				userId,
+				groupId,
+				myGradebook.getCreateDate(),
+				myGradebook.getModifiedDate(),
+				MyGradebook.class.getName(),
+				myGradebookId,
+				myGradebook.getUuid(),
+				0,
+				serviceContext.getAssetCategoryIds(),
+				serviceContext.getAssetTagNames(),
+				true, true,
+				null, null, null, null,
+				ContentTypes.TEXT_HTML,
+				myGradebook.getName(),
+				null, null, null, null,
+				0, 0, 
+				null);
+		
+		assetLinkLocalService.updateLinks(
+				userId, 
+				assetEntry.getEntryId(), 
+				serviceContext.getAssetLinkEntryIds(), 
+				AssetLinkConstants.TYPE_RELATED);
+		
+		WorkflowHandlerRegistryUtil.startWorkflowInstance(
+				myGradebook.getCompanyId(), 
+				myGradebook.getGroupId(), 
+				myGradebook.getUserId(), 
+				MyGradebook.class.getName(), 
+				myGradebook.getPrimaryKey(), 
+				myGradebook,
+				serviceContext);
+		
 		return myGradebook;
 	}
 	public MyGradebook deleteMyGradebook(
@@ -104,7 +144,29 @@ public class MyGradebookLocalServiceImpl
 				ResourceConstants.SCOPE_INDIVIDUAL,
 				myGradebookId);
 		
+		AssetEntry assetEntry = assetEntryLocalService.fetchEntry(
+				MyGradebook.class.getName(), 
+				myGradebookId);
+		
+		assetLinkLocalService.deleteLinks(assetEntry.getEntryId());
+		
+		assetEntryLocalService.deleteEntry(assetEntry);
+		
+		workflowInstanceLinkLocalService.deleteWorkflowInstanceLinks(
+				myGradebook.getCompanyId(),
+				myGradebook.getGroupId(),
+				MyGradebook.class.getName(),
+				myGradebook.getMyGradebookId());
+		
 		return myGradebook;
+	}
+	
+	public List<MyGradebook> getMyGradebooks(long groupId, int start, int end) {
+		return myGradebookPersistence.findByGroupId(groupId, start, end);
+	}
+	
+	public int getMyGradebooksCount(long groupId) {
+		return myGradebookPersistence.countByGroupId(groupId);
 	}
 	
 	public MyGradebook updateMyGradebook(
@@ -134,6 +196,65 @@ public class MyGradebookLocalServiceImpl
 				MyGradebook.class.getName(), 
 				myGradebookId,
 				serviceContext.getModelPermissions());
+		
+		AssetEntry assetEntry = assetEntryLocalService.updateEntry(
+				myGradebook.getUserId(), 
+				myGradebook.getGroupId(), 
+				myGradebook.getCreateDate(), 
+				myGradebook.getModifiedDate(), 
+				MyGradebook.class.getName(), 
+				myGradebookId, 
+				myGradebook.getUuid(), 
+				0, 
+				serviceContext.getAssetCategoryIds(), 
+				serviceContext.getAssetTagNames(), 
+				true, true, 
+				myGradebook.getCreateDate(),
+				null, null, null, 
+				ContentTypes.TEXT_HTML, 
+				myGradebook.getName(), 
+				null, null, null, null, 
+				0, 0, 
+				null);
+		
+		assetLinkLocalService.updateLinks(
+				serviceContext.getUserId(), 
+				assetEntry.getEntryId(), 
+				serviceContext.getAssetLinkEntryIds(), 
+				AssetLinkConstants.TYPE_RELATED);
+		
+		return myGradebook;
+	}
+	
+	public MyGradebook updateStatus(
+			long userId, long myGradebookId, int status, ServiceContext serviceContext)
+	throws PortalException, SystemException {
+		
+		User user = userLocalService.getUser(userId);
+		
+		MyGradebook myGradebook = getMyGradebook(myGradebookId);
+		
+		myGradebook.setStatus(status);
+		myGradebook.setStatusByUserId(userId);
+		myGradebook.setStatusByUserName(user.getFullName());
+		myGradebook.setStatusDate(new Date());
+		
+		myGradebookPersistence.update(myGradebook);
+		
+		if(status == WorkflowConstants.STATUS_APPROVED) {
+			
+			assetEntryLocalService.updateVisible(
+					MyGradebook.class.getName(), 
+					myGradebookId,
+					true);
+		} else {
+			
+			assetEntryLocalService.updateVisible(
+					MyGradebook.class.getName(), 
+					myGradebookId,
+					false);
+		}
+		
 		
 		return myGradebook;
 	}
