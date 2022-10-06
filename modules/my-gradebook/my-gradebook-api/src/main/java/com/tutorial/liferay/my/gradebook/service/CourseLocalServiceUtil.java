@@ -358,6 +358,15 @@ public class CourseLocalServiceUtil {
 		return getService().updateCourse(course);
 	}
 
+	public static Course updateStatus(
+			long userId, long myGradebookId, long courseId, int status,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws PortalException {
+
+		return getService().updateStatus(
+			userId, myGradebookId, courseId, status, serviceContext);
+	}
+
 	public static CourseLocalService getService() {
 		return _service;
 	}

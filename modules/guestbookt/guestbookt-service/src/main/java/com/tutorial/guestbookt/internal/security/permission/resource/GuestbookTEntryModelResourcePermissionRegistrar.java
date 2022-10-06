@@ -35,8 +35,10 @@ public class GuestbookTEntryModelResourcePermissionRegistrar {
 	        _serviceRegistration = bundleContext.registerService(
 	            ModelResourcePermission.class,
 	            ModelResourcePermissionFactory.create(
-	                GuestbookTEntry.class, GuestbookTEntry::getEntryId,
-	                _guestbookTEntryLocalService::getGuestbookTEntry, _portletResourcePermission,
+	                GuestbookTEntry.class, 
+	                GuestbookTEntry::getEntryId,
+	                _guestbookTEntryLocalService::getGuestbookTEntry, 
+	                _portletResourcePermission,
 	                (modelResourcePermission, consumer) -> {
 	                    consumer.accept(
 	                        new StagedModelPermissionLogic<>(

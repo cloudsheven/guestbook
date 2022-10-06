@@ -14,11 +14,11 @@
 	<portlet:param name="mvcPath" value="/my_gradebook_admin/view.jsp"/>
 </portlet:renderURL>
 
-<portlet:actionURL name='<%= myGadebook == null ? "addMyGradebook" : "updateMyGradebook" %>' var="editMyGradebookURL" />
+<portlet:actionURL name='<%= myGradebook == null ? "addMyGradebook" : "updateMyGradebook" %>' var="editMyGradebookURL" />
 
 <aui:form action="<%=editMyGradebookURL%>" name="fm">
 	
-	aui:model-context bean="<%=myGradebook%>" model="<%=MyGradebook.class %>" />
+	<aui:model-context bean="<%=myGradebook%>" model="<%=MyGradebook.class %>" />
 	
 	<aui:input type="hidden" name="myGradebookId"
 		value="<%=myGradebook == null ? "" : myGradebook.getMyGradebookId() %>" />

@@ -15,9 +15,15 @@
 package com.tutorial.liferay.my.gradebook.service.impl;
 
 import com.liferay.portal.aop.AopService;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.util.Validator;
+import com.tutorial.liferay.my.gradebook.exception.CourseNameException;
 import com.tutorial.liferay.my.gradebook.model.Course;
 import com.tutorial.liferay.my.gradebook.service.base.CourseLocalServiceBaseImpl;
 
+import java.util.Date;
 import java.util.List;
 
 import org.osgi.service.component.annotations.Component;
@@ -31,7 +37,66 @@ import org.osgi.service.component.annotations.Component;
 )
 public class CourseLocalServiceImpl extends CourseLocalServiceBaseImpl {
 	
+	public Course addCourse(
+			long userId, long myGradebookId, String name, 
+			ServiceContext serviceContext)
+	throws PortalException{
+		
+		long groupId = serviceContext.getScopeGroupId();
+		
+		User user = userLocalService.getUserById(userId);
+		
+		Date now = new Date();
+		
+		validate (name);
+		
+		long courseId = counterLocalService.increment();
+		
+		Course course = coursePersistence.create(courseId);
+		
+		course.setUuid(serviceContext.getUuid());
+		course.setUserId(userId);
+		course.setGroupId(groupId);
+		course.setCompanyId(user.getCompanyId());
+		course.setUserName(user.getFullName());
+		course.setCreateDate(serviceContext.getCreateDate(now));
+		course.setModifiedDate(serviceContext.getModifiedDate(now));
+		course.setExpandoBridgeAttributes(serviceContext);
+		course.setMyGradebookId(myGradebookId);
+		
+		course.setName(name);		
+		
+		coursePersistence.update(course);
+		
+		resourceLocalService.addResources(
+				user.getCompanyId(), 
+				groupId, 
+				userId, 
+				Course.class.getName(),
+				courseId,
+				false,
+				true,
+				true);
+		
+
+	}
+	
 	public List<Course> getCourses(long groupId, long myGradebookId) {
 		return coursePersistence.findByG_G(groupId, myGradebookId);
+	}
+	
+	public Course updateStatus(
+			long userId, long myGradebookId, long courseId, int status, 
+			ServiceContext serviceContext)
+	throws PortalException {
+		
+		return null;
+	}
+	protected void validate(String name)
+	throws PortalException{
+		
+		if(Validator.isNull(name)) {
+			throw new CourseNameException();
+		}		
 	}
 }

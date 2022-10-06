@@ -113,6 +113,7 @@
 	
 <exceptions>
 	<exception>MyGradebookName</exception>
+	<exception>CourseName</exception>
 </exceptions>
 		
 		

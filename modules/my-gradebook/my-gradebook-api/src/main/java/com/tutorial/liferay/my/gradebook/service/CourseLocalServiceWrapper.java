@@ -410,6 +410,16 @@ public class CourseLocalServiceWrapper
 	}
 
 	@Override
+	public com.tutorial.liferay.my.gradebook.model.Course updateStatus(
+			long userId, long myGradebookId, long courseId, int status,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _courseLocalService.updateStatus(
+			userId, myGradebookId, courseId, status, serviceContext);
+	}
+
+	@Override
 	public CourseLocalService getWrappedService() {
 		return _courseLocalService;
 	}

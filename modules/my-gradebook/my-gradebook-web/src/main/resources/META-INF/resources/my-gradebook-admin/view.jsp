@@ -1,6 +1,3 @@
-<%@page import="com.tutorial.liferay.my.gradebook.service.MyGradebookLocalServiceUtil"%>
-<%@page import="com.tutorial.liferay.my.gradebook.model.MyGradebook"%>
-
 <%@ include file="../init.jsp" %>
 
 <liferay-ui:success key="myGradebookAdded" message="my-gradebook-added" />
